@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 //Registration router
-router.post('/register', (req, res) => {
+router.post('/users/register', (req, res) => {
     res.send('User registration successfully');
 });
 
@@ -23,7 +23,7 @@ router.post('/users/logout', (req, res) => {
 router.get('/users/profile', (req, res) => {
     res.send('User profile fatched successfully');
 });
-router.put('/user/profile', (req,res) => {
+router.put('/users/profile', (req,res) => {
     res.send('User successfully updated profile');
 });
 
