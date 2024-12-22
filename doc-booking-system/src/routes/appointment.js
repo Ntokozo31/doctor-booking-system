@@ -4,14 +4,14 @@ const express = require('express');
 //Initialize router
 const router = express.Router();
 
+//view all your appointments
+router.get('/appointment/:id', (req, res) => {
+    res.send('All your booking appointments successfully fetched');
+});
+
 //Book an appointment
 router.post('/appointment/create', (req, res) => {
     res.send('Your booking appointment was successfully');
-});
-
-//View all your appointments
-router.get('appointment/:id', (req, res) => {
-    res.send('All your bookings successfully fachted');
 });
 
 //Cancel appointment
