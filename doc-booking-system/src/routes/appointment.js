@@ -10,7 +10,7 @@ router.post('/appointment/create', (req, res) => {
 });
 
 //View all your appointments
-router.get('appointment/view', (req, res) => {
+router.get('appointment/:id', (req, res) => {
     res.send('All your bookings successfully fachted');
 });
 
