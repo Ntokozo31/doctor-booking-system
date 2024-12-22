@@ -1,6 +1,7 @@
 //importing express module
 const express = require('express');
 
+//initialize router
 const router = express.Router();
 
 //Registration router
