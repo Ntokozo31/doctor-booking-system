@@ -5,25 +5,25 @@ const express = require('express');
 const router = express.Router();
 
 //Registration router
-router.get('/register', (req, res) => {
+router.post('/register', (req, res) => {
     res.send('User registration successfully');
 });
 
 //Login route
-router.get('/login', (req, res) => {
+router.post('/users/login', (req, res) => {
     res.send('User login successfully');
 });
 
 //Logout route
-router.post('/logout', (req, res) => {
+router.post('/users/logout', (req, res) => {
     res.send('User logout successfully');
 });
 
 //Profile route (view/ update profile)
-router.get('/profile', (req, res) => {
+router.get('/users/profile', (req, res) => {
     res.send('User profile fatched successfully');
 });
-router.put('/profile', (req,res) => {
+router.put('/user/profile', (req,res) => {
     res.send('User successfully updated profile');
 });
 
