@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Import middlewares
-const { register, login } = require('../middlewares/auth');
+const { validateRegistration, validateLogin } = require('../middlewares/auth');
 
 // Import auth controller
 const { register, login, logout, getProfile } = require('../controllers/authController');
@@ -22,3 +22,5 @@ router.post('/logout', logout);
 // Profile router
 router.get('/profile', getProfile);
 
+// Exports router
+module.exports = router;
