@@ -26,11 +26,17 @@ const authRouter = require('./src/routes/auth');
 // Import appointment router
 const appointmentRouter = require('./src/routes/appointment');
 
+// Import doctor router
+const doctorRouter = require('./src/routes/doctor');
+
 // Authorization router to handle all the auth routes
 app.use('/api/auth', authRouter);
 
 // Appointment router to handle all the appointment routes
 app.use('/api/appointment', appointmentRouter);
+
+// Doctor router to handle all the doctor routes
+app.use('/api/doctor', doctorRouter);
 
 // Home route
 app.get('/', (req, res) => {
