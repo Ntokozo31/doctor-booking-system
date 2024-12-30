@@ -18,3 +18,16 @@ router.get('/all/:id', (req, res) => {
 router.put('/update/:id', (req, res) => {
     res.send('Your appointment has been updated successfully');
 });
+
+// Cancel appointment
+router.delete('/canel/:id', (req, res) => {
+    res.send('Your appointment has been cancelled successfully');
+});
+
+// Check available slots
+router.get('/slots', (req, res) => {
+    res.send('Available slots retrieved successfully');
+});
+
+// Export the router
+module.exports = router;
