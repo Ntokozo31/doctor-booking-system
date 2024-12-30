@@ -20,11 +20,17 @@ app.use(cors());
 // Body parser for incoming requests
 app.use(express.json());
 
-// Import routes
+// Import  authorization routes
 const authRouter = require('./src/routes/auth');
 
-// Auth router to handle all the auth routes
+// Import appointment router
+const appointmentRouter = require('./src/routes/appointment');
+
+// Authorization router to handle all the auth routes
 app.use('/api/auth', authRouter);
+
+// Appointment router to handle all the appointment routes
+app.use('/api/appointment', appointmentRouter);
 
 // Home route
 app.get('/', (req, res) => {
