@@ -20,7 +20,7 @@ router.post('/login', login);
 router.post('/logout', logout);
 
 // Profile router
-router.get('/profile', getProfile);
+router.get('/profile/:id', getProfile);
 
 // Exports router
 module.exports = router;
