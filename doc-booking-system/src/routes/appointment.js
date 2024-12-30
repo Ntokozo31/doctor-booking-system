@@ -20,7 +20,7 @@ router.put('/update/:id', (req, res) => {
 });
 
 // Cancel appointment
-router.delete('/canel/:id', (req, res) => {
+router.delete('/cancel/:id', (req, res) => {
     res.send('Your appointment has been cancelled successfully');
 });
 
