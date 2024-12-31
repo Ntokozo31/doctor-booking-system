@@ -1,42 +1,37 @@
 // Import express
 const express = require('express');
 
-// Initialize router
+// Initiallize router
 const router = express.Router();
 
-// Create doctor profile
-// This route will be used to create doctor profile
-router.post('/create/doc', (req, res) => {
-    res.send('Congratulations! Doctor your profile has been successfully created');
+// Get all doctors
+// This route will be used to get all doctors
+router.get('/all/docs', (req, res) => {
+    res.send('All doctors successfully retrieved');
 });
 
-// Update doctor profile
-// This route will be used to update dotors profile
-router.put('/update/doc/:id', (req, res) => {
-    res.send('You successfully updated your profile');
-});
-
-// Get appointments for a doctor
-// This route will be used to get all appointments for a doctor
-router.get('/appointments/doc/:id', (req, res) => {
-    res.send('All your appointments have been retrieved successfully');
-});
-// View doctor profile
-// This route will be used to view a doctor profile
+// Get doctor by id only
+// This route will be used to get doctor by id
 router.get('/doc/:id', (req, res) => {
-    res.send('Doctor profile retrieved successfully');
+    res.send('Doctor successfully retrieved');
 });
 
-// Doctors availibility
-// This route will be used to check doctors availibility
-router.get('/availibility/doc', (req, res) => {
-    res.send('Doctor is available');
+// New doctor to the system
+// This route will be used to add new doctor to the system (admin)
+router.post('/new/doc', (req, res) => {
+    res.send('New doctor successfully added');
 });
 
-// doctors appointments notification
-// This route will be used to notify doctor of appointments
-router.get('/notification/doc', (req, res) => {
-    res.send('You have an appointment');
+// Update doctor details
+// This route will be used to update doctor details (admin)
+router.put('/update/doc/:id', (req, res) => {
+    res.send('Doctor details successfully updated');
+});
+
+// Delete doctor from the system
+// This route will be used to delete doctor from the system (admin)
+router.delete('/delete/doc/:id', (req, res) => {
+    res.send('Doctor successfully deleted');
 });
 
 // Export router
