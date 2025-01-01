@@ -15,8 +15,8 @@ mongoose.connect('mongodb://localhost:27017/Doctors')
         // Add new doctor
         const addDoctor = [
             {
-                name: 'Dr Ntokozo Dube',
-                email: 'dubentokozo45@yahoo.com',
+                name: 'Dr Jane Doe',
+                email: 'janedoe@gmail.com',
                 speciality: 'Cardiologist',
                 qualification: 'MBChB',
                 availability: {
