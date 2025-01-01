@@ -1,38 +1,44 @@
 // import mongoose
 const mongoose = require('mongoose');
 
+// Import dotenv
+require('dotenv').config();
+
 // Import doctor model
-const Docs = require('/src/models/doctor');
+const Docotor = require('../models/doctor');
 
 // Connect to mongoDB
-mongoose.connect(
-    'mongodb://localhost:27017/Doctors',
-    { useNewUrlParser: true,
-    useUnifiedTopology: true, })
-    .then(() => console.log('Successfully connected to MongoDb'))
-    .catch(err => console.log('Sorry, could not connect to MongoDb', err));
+mongoose.connect('mongodb://localhost:27017/Doctors')
+    .then(() => {
+        console.log('Successfully connected to MongoDb')
 
-// Add new doctor
-const addDoctor = [
-    {
-        name: 'Dr Ntokozo Dube',
-        email: 'ntokozod@gamil.com',
-        speciality: 'Cardiologist',
-        qualification: 'MBChB',
-        experiance: '8 years',
-        availability: {
-            days: ['Monday', 'Tuesday', 'Friday'],
-            startTime: '08:00',
-            endTime: '17:00',
-        },
-        Location: 'Durban',
-    }
-]
+        // Add new doctor
+        const addDoctor = [
+            {
+                name: 'Dr Ntokozo Dube',
+                email: 'dubentokozo45@yahoo.com',
+                speciality: 'Cardiologist',
+                qualification: 'MBChB',
+                availability: {
+                    days: ['Monday', 'Tuesday', 'Friday'],
+                    startTime: '08:00',
+                    endTime: '17:00',
+                },
+                location: 'Durban',
+                experience: '8 years'
+            }
+        ];
 
-// Insert new doctors to system
-Docs.insertOne(addDoctor)
-    .then(() => console.log('Doctor successfully added'))
-    .catch(err => console.log('Sorry, could not add doctor', err));
-
-// Close connection
-mongoose.connection.close();
+        // Insert new doctors to system
+        return Docotor.insertMany(addDoctor);
+    })
+    .then(() => {
+        console.log('Doctor successfully added')
+        // close connetion
+        mongoose.connection.close();
+    })
+    .catch(err => {
+        console.log('Sorry, could not add doctor', err)
+        // Close connection
+        mongoose.connection.close();
+    });
