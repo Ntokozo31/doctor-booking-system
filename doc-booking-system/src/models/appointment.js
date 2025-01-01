@@ -44,7 +44,11 @@ const AppointmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-
+    // cancelled at
+    cancelledAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 // Export module
