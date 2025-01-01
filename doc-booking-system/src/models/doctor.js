@@ -13,17 +13,11 @@ const docSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
-    },
-    // Doctor phone number
-    phone: {
-        type: Number,
-        required: true
     },
     // Doctor speciality
     speciality: {
         type: String,
-        required: trusted
+        required: true
     },
     // Doctor qualification
     qualification: {
@@ -32,7 +26,7 @@ const docSchema = new mongoose.Schema({
     },
     // Doctor experience
     experience: {
-        type: Number,
+        type: String,
         required: true
     },
     // Doctor availability
@@ -48,8 +42,7 @@ const docSchema = new mongoose.Schema({
         endTime: {
             type: String,
             required: true,
-        },
-        required: true
+        }
     },
     // Doctor location
     location: {
@@ -61,7 +54,4 @@ const docSchema = new mongoose.Schema({
 
 // schema model
 // This model will be used to create doctor model
-const Doctor = mongoose.model('Doctor', docSchema);
-
-// Export model
-module.exports = Doctor;
+module.exports = mongoose.model('Doctor', docSchema);
