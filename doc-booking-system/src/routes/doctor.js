@@ -4,10 +4,23 @@ const express = require('express');
 // Initiallize router
 const router = express.Router();
 
+// Import database
+const { getDb } = require('../config/db');
+
 // Get all doctors
 // This route will be used to get all doctors
 router.get('/all/docs', (req, res) => {
-    res.send('All doctors successfully retrieved');
+    // Get all doctors from the database
+    const db = getDb();
+    db.collection('doctors').find({}, {projection: { name: 1, speciality: 1, location: 1} }).toArray()
+        .then(doctors => {
+            res.send(doctors);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send('An error occured');
+        })
+    //res.send('All doctors successfully retrieved');
 });
 
 // Get doctor by id only
