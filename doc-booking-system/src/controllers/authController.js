@@ -1,6 +1,8 @@
 // Import getDb from db
 const { getDb } = require('../config/db');
 
+// Import validator
+const validator = require('validator');
 // Register user and save to database
 const register = async (req, res) => {
     try {
@@ -9,6 +11,15 @@ const register = async (req, res) => {
         // Validate the fields
         if (!username || !email || !password) {
             return res.status(400).send('OOPS all fields are required')
+        }
+        // Validate user email
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({error: 'Sorry invalid email format'});
+        }
+        // Validate password
+        // The password must be at least 6 characters
+        if (!password || password.length < 8) {
+            return res.status(400).json({error: 'Your password must be at least 6 characters long'});
         }
         const db = getDb();
         // Check if the user already exist
