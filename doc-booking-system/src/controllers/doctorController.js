@@ -18,6 +18,30 @@ const allDoctors = async (req, res) => {
     }
 }
 
+// Get doctor by name
+const doctorByName = async (req, res) => {
+    try {
+        // Retrieve doctor by name in our db
+        // Get more info about that particular doctor (name, location, availability...)
+        // If the doctor does not exist we return a statusCode 404
+        // If it a server error we return statusCode of 500
+        const db = getDb();
+        const docName = req.params.name;
+        const doctor = await db.collection('doctors').findOne({name: docName})
+            .then((doctor) => {
+                if (!doctor) {
+                    return res.status(404).json({ message: 'This doctor cannot be found'});
+                }
+                res.send(doctor);
+            })
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Eish sorry an internal server error occurred');
+    }
+};
 
 // Export modules
-module.exports = allDoctors;
+module.exports = {
+    allDoctors,
+    doctorByName
+};
