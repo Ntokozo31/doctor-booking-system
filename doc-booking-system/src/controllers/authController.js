@@ -43,7 +43,7 @@ const register = async (req, res) => {
     // Internal server error problem we return a statusCode of 500
     } catch (err) {
         console.error(err);
-        res.status(500).send('Eish sorry an internal error server occurred');
+        res.status(500).send('Eish sorry an internal server error occurred');
     };
 };
 
@@ -70,8 +70,11 @@ const userLogin = async (req, res) => {
             return res.status(401).json({ message: 'Sorry invalid credentials'});
         }
         res.status(200).json({ message: 'Login successfull', user: { email: user.email, username: user.username}});
+    } catch(err) {
+        console.error(err);
+        res.status(500).send('Eish sorry an internal server error occurred');
     }
-}
+};
 
 // Exports register
 module.exports = { register };
