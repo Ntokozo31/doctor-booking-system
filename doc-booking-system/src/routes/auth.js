@@ -4,17 +4,17 @@ const express = require('express');
 // Initialize router
 const router = express.Router();
 
+// Import database
+const { register, userLogin } = require('../controllers/authController');
+
 // Registration router
 // This router will be used to register user
-router.post('/register', (req, res) => {
-    res.send('User registered successfully');
-});
+router.post('/register', register);
+    //res.send('User registered successfully');
 
 // Login router
 // This router will be used to login user
-router.post('/login', (req, res) => {
-    res.send('User logged in successfully');
-});
+router.post('/login',userLogin);
 
 // Logout router
 // This router will be used to logout user

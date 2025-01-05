@@ -7,23 +7,12 @@ const router = express.Router();
 // Import database
 const { getDb } = require('../config/db');
 
+// Import allDocotors
+const allDoctors = require('../controllers/doctorController');
+
 // Get all doctors
 // This route will be used to retrieve all doctors in our database
-router.get('/all/docs', (req, res) => {
-    // Retrieve all doctors
-    // We get our doctors by name, speciality and location
-    // If our server has an error we return statusCode of 500
-    const db = getDb();
-    db.collection('doctors').find({}, {projection: { name: 1, speciality: 1, location: 1} }).toArray()
-        .then(doctors => {
-            res.send(doctors);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).send('An error occured');
-        })
-    //res.send('All doctors successfully retrieved');
-});
+router.get('/all/docs', allDoctors);
 
 // Get doctor by Name only
 // This route will be used to get doctor by name
