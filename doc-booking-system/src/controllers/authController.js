@@ -3,6 +3,10 @@ const { getDb } = require('../config/db');
 
 // Import validator
 const validator = require('validator');
+
+// Import bcrypt
+const bcrypt = require('bcrypt');
+
 // Register user and save to database
 const register = async (req, res) => {
     try {
@@ -18,9 +22,12 @@ const register = async (req, res) => {
         }
         // Validate password
         // The password must be at least 6 characters
-        if (!password || password.length < 8) {
+        if (!password || password.length < 6) {
             return res.status(400).json({error: 'Your password must be at least 6 characters long'});
         }
+        // Hashing password before storing it in our db
+        const hashingPassword = await bcrypt.hash(password, 10);
+
         const db = getDb();
         // Check if the user already exist
         // If the user exist we return statusCode of 400
@@ -29,7 +36,7 @@ const register = async (req, res) => {
             return res.status(400).send('OOPS sorry user with this email already exit');
         }
         // Add new user to database
-        const newUser = { username, email, password}
+        const newUser = { username, email, password: hashingPassword, createdAt: new Date()};
         await db.collection('users').insertOne(newUser);
         res.status(201).send({ message: `Congratulations ${username} your registraion was successful` });
     // Internal server error problem we return a statusCode of 500
