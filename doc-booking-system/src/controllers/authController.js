@@ -53,6 +53,8 @@ const userLogin = async (req, res) => {
         // Extract email and password in req.bod
         const { email, password } = req.body
 
+        const db = getDb();
+
         // Find the user by email in our database
         const user = await db.collection('users').findOne({email});
 
@@ -76,5 +78,10 @@ const userLogin = async (req, res) => {
     }
 };
 
+
+
 // Exports register
-module.exports = { register };
+module.exports = {
+    register,
+    userLogin
+};
