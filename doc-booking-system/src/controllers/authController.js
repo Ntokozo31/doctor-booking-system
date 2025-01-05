@@ -47,5 +47,27 @@ const register = async (req, res) => {
     };
 };
 
+// User login
+const userLogin = async (req, res) => {
+    try {
+        // Extract email and password in req.bod
+        const { email, password } = req.body
+
+        // Find the user by email in our database
+        const user = await db.collection('users').findOne({email});
+
+        // If we dont if the user by email
+        // We return statusCode of 400
+        if (!user) {
+            return res.status(404).json({ error: 'Sorry user not found'});
+        }
+        
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) {
+            return res.status(401).json({ message: 'Sorry invalid password'});
+        }
+    }
+}
+
 // Exports register
 module.exports = { register };
