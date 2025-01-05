@@ -17,6 +17,7 @@ const register = async (req, res) => {
             return res.status(400).send('OOPS all fields are required')
         }
         // Validate user email
+        // If email is an invalid format we return statusCode of 400
         if (!validator.isEmail(email)) {
             return res.status(400).json({error: 'Sorry invalid email format'});
         }
