@@ -56,16 +56,20 @@ const userLogin = async (req, res) => {
         // Find the user by email in our database
         const user = await db.collection('users').findOne({email});
 
-        // If we dont if the user by email
-        // We return statusCode of 400
+        // If we dont if the user
+        // We return statusCode of 404
         if (!user) {
             return res.status(404).json({ error: 'Sorry user not found'});
         }
         
+        // Validate password
+        // If the password is invalid we return statusCode of 401
+        // Else if the password is valid, the user will login successfully
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
-            return res.status(401).json({ message: 'Sorry invalid password'});
+            return res.status(401).json({ message: 'Sorry invalid credentials'});
         }
+        res.status(200).json({ message: 'Login successfull', user: { email: user.email, username: user.username}});
     }
 }
 
