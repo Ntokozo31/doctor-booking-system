@@ -30,12 +30,11 @@ const doctorByName = async (req, res) => {
         const db = getDb();
         const docName = req.params.name;
         const doctor = await db.collection('doctors').findOne({name: docName})
-            .then((doctor) => {
-                if (!doctor) {
-                    return res.status(404).json({ message: 'This doctor cannot be found'});
-                }
-                res.send(doctor);
-            })
+        if (!doctor) {
+            return res.status(404).json({ message: 'This doctor cannot be found'});
+        }
+        res.send(doctor);
+    // If it a server error we return statusCode of 500
     } catch (err) {
         console.error(err)
         res.status(500).send('Eish sorry an internal server error occurred');
