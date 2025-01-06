@@ -29,7 +29,7 @@ const doctorByName = async (req, res) => {
         // If it a server error we return statusCode of 500
         const db = getDb();
         const docName = req.params.name;
-        const doctor = await db.collection('doctors').findOne({name: docName})
+        const doctor = await db.collection('doctors').findOne({name: docName});
         if (!doctor) {
             return res.status(404).json({ message: 'This doctor cannot be found'});
         }

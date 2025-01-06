@@ -52,7 +52,7 @@ const bookAppointment = async (req, res) => {
             time,
             status: 'booked'
         }
-        
+
         await db.collection('appointments').insertOne(docBook)
         res.status(201).json({ message: 'Your Appointment Booking is now Complete!', Details: {
             doctorName: docBook.doctorName,
@@ -70,5 +70,24 @@ const bookAppointment = async (req, res) => {
     }
 };
 
+// Get user appointment
+const allAppointment = async (req, res) => {
+    try {
+        // Get all user appointment
+        const db = getDb();
+        const userId = req.params.userId
+        const userAppointment = await db.collection('appointments').findOne({userId});
+        if (!userAppointment) {
+            return res.status(404).json({ message: 'Sorry you dont have any appointment!'})
+        }
+        res.send(userAppointment)
+    } catch (err) {
+        console.error('Eish sorry an internal server error occurred')
+    }
+};
+
 // Export Module
-module.exports = { bookAppointment };
+module.exports = { 
+    bookAppointment,
+    allAppointment
+};
