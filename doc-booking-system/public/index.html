@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocBook</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nev>
+            <div class="logo">DocBook</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#Signup">Signup</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </nev>
+    </header>
+    <section id="home">
+        <div class="home">
+            <h1>Welcome to DocBook</h1>
+            <p>DocBook is a platform that allows you to book an appointment with a doctor of your choice.</p>
+            <a href="#Signup" class="Button">Get Started</a>
+        </div>
+    </section>
+    <section id="Signup">
+        <h2>Create an Account</h2>
+        <form>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <lebel for="email">Email Adress:</lebel>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <lebel for="password">Password:</lebel>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit">Signup</button>
+            <p>Already have an account? <a href="#login">Login</a></p>
+        </form>
+    </section>
+
+    <section id="login">
+        <h2>Login</h2>
+        <form>
+            <div class="form-group">
+                <label for="email">Email Adress:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+</body>
