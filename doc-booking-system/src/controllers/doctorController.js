@@ -6,11 +6,13 @@ const allDoctors = async (req, res) => {
     try {
         // We retrieve our doctors
         // Retrieve them by name, speciality and location from database
+        // If no doctors found we return statusCode of 400
         const db = getDb();
-        db.collection('doctors').find({}, {projection: { name: 1, speciality: 1, location: 1}}).toArray()
-            .then(doctors => {
-                res.send(doctors);
-            })
+        const doctors = await db.collection('doctors').find({}, {projection: { name: 1, speciality: 1, location: 1}}).toArray()
+        if (!doctors) {
+            return res.status(400).json({ message: 'Sorry no doctors found'})
+        }
+        res.send(doctors);
     // If our server has an error we return statusCode of 500
     } catch (err) {
         console.error(err);
