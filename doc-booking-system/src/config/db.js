@@ -1,5 +1,5 @@
 // import MongoClient
-const { MongoClient } = require('mongoClient');
+const { MongoClient } = require('mongodb');
 
 // Declare dbConnection variable
 let dbConnection;
