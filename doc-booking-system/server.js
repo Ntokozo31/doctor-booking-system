@@ -1,6 +1,8 @@
 // Import express
 const express = require('express');
 
+// Import connection to dabase
+const { connectToDb, getDb } = require('./src/config/db');
 
 //Import cors
 const cors = require('cors');
@@ -47,9 +49,17 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
     res.status(404).send('This route does not exist');
 })
-// Port listener
-app.listen(PORT, () => {
-    console.log(`Server is now running on port ${PORT}`);
+
+// Connect to mongoDb and start the server
+let db;
+connectToDb((err) => {
+    if (!err) {
+        // Port listening
+        app.listen(PORT, () => {
+            console.log(`Server is now running on port ${PORT}`);
+        })
+        db = getDb();
+    }
 });
 
 // Export the app
