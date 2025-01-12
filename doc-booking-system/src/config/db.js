@@ -1,11 +1,14 @@
-// import mongoose
-const mongoose = require('mongoose');
+// import MongoClient
+const { MongoClient } = require('mongoClient');
+
+// Declare dbConnection variable
+let dbConnection;
 
 // Import dotenv
 require('dotenv').config();
 
-// Import doctor model
-const Docotor = require('../models/doctor');
+// Get the URI from the .env file
+const uri = process.env.MONGO_URI;
 
 // Connect to mongoDB
 module.exports = {
