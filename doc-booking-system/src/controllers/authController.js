@@ -87,7 +87,7 @@ const userLogin = async (req, res) => {
         const userToken = jwt.sign(
             { userId: user._id, username: user.username, email: user.email },
             JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: process.env.JWT_EXPIRES_IN }
         )
         res.status(200).json({ message: 'Successfully logged in', userToken });
     } catch(err) {
@@ -95,8 +95,6 @@ const userLogin = async (req, res) => {
         res.status(500).send('Eish sorry an internal server error occurred');
     }
 };
-
-
 
 // Exports register
 module.exports = {
