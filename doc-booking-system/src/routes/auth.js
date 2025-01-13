@@ -18,9 +18,7 @@ router.post('/login',userLogin);
 
 // Logout router
 // This router will be used to logout user
-router.get('/logout', (req, res) => {
-    res.send('User successfully logged out');
-});
+router.get('/logout', userLogout);
 
 // Profile router
 // This router will be used to get user profile
