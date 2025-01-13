@@ -7,6 +7,12 @@ const validator = require('validator');
 // Import bcrypt
 const bcrypt = require('bcrypt');
 
+// Import jwt
+const jwt = require('jsonwebtoken');
+
+// Import JWT_SECRET
+require('dotenv').config();
+
 // Register user and save to database
 const register = async (req, res) => {
     try {
@@ -47,6 +53,9 @@ const register = async (req, res) => {
     };
 };
 
+// Initialize jwt secret
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // User login
 const userLogin = async (req, res) => {
     try {
@@ -71,7 +80,16 @@ const userLogin = async (req, res) => {
         if (!validPassword) {
             return res.status(401).json({ message: 'Invalid email or password'});
         }
-        res.status(200).json({ message: 'Login successfull', user: { email: user.email, username: user.username}});
+
+        // Genarate jwt token
+        // We include userId, username and email in the token
+        // Set the token to expire in 1 hour
+        const userToken = jwt.sign(
+            { userId: user._id, username: user.username, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        )
+        res.status(200).json({ message: 'Successfully logged in', userToken });
     } catch(err) {
         console.error(err);
         res.status(500).send('Eish sorry an internal server error occurred');
