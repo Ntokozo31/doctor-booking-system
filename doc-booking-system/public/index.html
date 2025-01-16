@@ -3,59 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocBook</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>DocBook - Doctor Booking System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nev>
-            <div class="logo">DocBook</div>
-            <ul>
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-stethoscope"></i>
+                DocBook
+            </a>
+            <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#Signup">Signup</a></li>
-                <li><a href="#login">Login</a></li>
+                <li><a href="#why-choose-us">Why Choose Us</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#specialties">Specialties</a></li>
+                <li><a href="signup-login.html">Signup/Login</a></li>
             </ul>
-        </nev>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Doctors Who Care About Your Health</h1>
+                    <p>Book appointments with the best doctors near you.</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="signup-login.html" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <img src="https://unsplash.com/photos/two-surgeons-performing-surgery-on-a-patient-in-a-hospital-V_0ES17m9Tc" alt="Doctor with patient" style="border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                </div>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search doctors by specialty...">
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
     </header>
-    <section id="home">
-        <div class="home">
-            <h1>Welcome to DocBook</h1>
-            <p>DocBook is a platform that allows you to book an appointment with a doctor of your choice.</p>
-            <a href="#Signup" class="Button">Get Started</a>
+
+    <section id="why-choose-us" class="why-choose-us">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Why Choose Us</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">Experience healthcare excellence with our comprehensive medical services and expert doctors</p>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Expert Doctors</h3>
+                    <p>Access to highly qualified and experienced medical professionals</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7 Care</h3>
+                    <p>Round-the-clock medical support whenever you need it</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art medical equipment and facilities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Patient Care</h3>
+                    <p>Personalized attention and comprehensive care</p>
+                </div>
+            </div>
         </div>
     </section>
-    <section id="Signup">
-        <h2>Create an Account</h2>
-        <form>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
 
-            <div class="form-group">
-                <lebel for="email">Email Adress:</lebel>
-                <input type="email" id="email" name="email" required>
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Find a Doctor</h3>
+                    <p>Search by specialty or doctor's name</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Book Appointment</h3>
+                    <p>Select your preferred time slot and book instantly</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Get Care</h3>
+                    <p>Book and visit the doctor and get the care you need</p>
+                </div>
             </div>
-
-            <div class="form-group">
-                <lebel for="password">Password:</lebel>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <button type="submit">Signup</button>
-            <p>Already have an account? <a href="#login">Login</a></p>
-        </form>
+        </div>
     </section>
 
-    <section id="login">
-        <h2>Login</h2>
-        <form>
-            <div class="form-group">
-                <label for="email">Email Adress:</label>
-                <input type="email" id="email" name="email" required>
+    <section id="specialties" class="specialties">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 2rem;">Popular Specialties</h2>
+            <div class="specialty-grid">
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Cardiology</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Neurology</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Pediatrics</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-bone"></i>
+                    </div>
+                    <h3>Orthopedics</h3>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">What Our Patients Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Excellent service! The booking process was smooth."</p>
+                    <p style="font-weight: bold; margin-top: 1rem;">Kaira Nadioo</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I'm impressed with the quality of care I received. He was knowledgeable and caring."</p>
+                    <p style="font-weight: bold; margin-top: 1rem;">Arther Smith</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"DocBook easy to find your preferred doctor and book an appointment. Highly  Highly recommended!"</p>
+                    <p style="font-weight: bold; margin-top: 1rem;">Gugulethu Zondi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Need Medical Attention?</h2>
+                <p style="margin-bottom: 2rem;">Book your appointment now and get the care you deserve</p>
+                <a href="#" class="btn btn-primary">Book Appointment</a>
+                <div style="margin-top: 2rem;">
+                    <span style="display: inline-flex; align-items: center;">
+                        <span style="width: 2rem; height: 2rem; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                        or call us at <strong style="margin-left: 0.5rem;">1-800-MEDICARE</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#why-choose-us"><i class="fas fa-check-circle"></i> Why Choose Us</a></li>
+                        <li><a href="#how-it-works"><i class="fas fa-question-circle"></i> How It Works</a></li>
+                        <li><a href="#specialties"><i class="fas fa-stethoscope"></i> Specialties</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Specialties</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-heart"></i> Cardiology</a></li>
+                        <li><a href="#"><i class="fas fa-brain"></i> Neurology</a></li>
+                        <li><a href="#"><i class="fas fa-baby"></i> Pediatrics</a></li>
+                        <li><a href="#"><i class="fas fa-bone"></i> Orthopedics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> 063</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Medical Center Drive</li>
+                        <li><i class="fas fa-city"></i> Healthcare City, HC 12345</li>
+                        <li><i class="fas fa-envelope"></i> support@medicare.com</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 DocBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
 </body>
+</html>
