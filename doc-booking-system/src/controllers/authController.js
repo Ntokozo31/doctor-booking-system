@@ -25,12 +25,12 @@ const register = async (req, res) => {
         // Validate user email
         // If email is an invalid format we return statusCode of 400
         if (!validator.isEmail(email)) {
-            return res.status(400).json({error: 'Sorry invalid email format'});
+            return res.status(400).json({ message: 'Sorry invalid email format'});
         }
         // Validate password
         // The password must be at least 6 characters
         if (!password || password.length < 6) {
-            return res.status(400).json({error: 'Your password must be at least 6 characters long'});
+            return res.status(400).json({ message: 'Your password must be at least 6 characters long'});
         }
         // Hashing password before storing it in our db
         const hashingPassword = await bcrypt.hash(password, 10);
@@ -40,12 +40,12 @@ const register = async (req, res) => {
         // If the user exist we return statusCode of 400
         const existUser = await db.collection('users').findOne({email})
         if (existUser) {
-            return res.status(400).send('OOPS sorry user with this email already exit');
+            return res.status(400).json({ message: 'OOPS sorry user with this email already exit' });
         }
         // Add new user to database
         const newUser = { username, email, password: hashingPassword, createdAt: new Date()};
         await db.collection('users').insertOne(newUser);
-        res.status(201).send({ message: `Congratulations ${username} your registraion was successful` });
+        res.status(201).json({ message: `Congratulations ${username} registraion was successful` });
     // Internal server error problem we return a statusCode of 500
     } catch (err) {
         console.error(err);
@@ -70,7 +70,7 @@ const userLogin = async (req, res) => {
         // If we dont if the user
         // We return statusCode of 404
         if (!user) {
-            return res.status(404).json({ error: 'Sorry user not found'});
+            return res.status(404).json({ message: 'Sorry user not found'});
         }
         
         // Validate password
@@ -92,7 +92,7 @@ const userLogin = async (req, res) => {
         res.status(200).json({ message: 'Successfully logged in', userToken });
     } catch(err) {
         console.error(err);
-        res.status(500).send('Eish sorry an internal server error occurred');
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred' });
     }
 };
 
