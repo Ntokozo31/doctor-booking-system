@@ -1,20 +1,17 @@
 // Import express
 const express = require('express');
+const { bookAppointment, allAppointment } = require('../controllers/appointmentController');
 
 // Initialize the router
 const router = express.Router();
 
 // Create an appointment
 // This route will be used to create an appointment
-router.post('/create', (req, res) => {
-    res.send('Your appointment has been created successfully');
-});
+router.post('/create', bookAppointment);
 
 // Get all appointments for that user
 // This route will be used to get all appointment for user
-router.get('/all/:id', (req, res) => {
-    res.send('All your appointments have been retrieved successfully');
-});
+router.get('/all/:id', allAppointment);
 
 // Update appointment
 // This route will be used to udate an appointment
