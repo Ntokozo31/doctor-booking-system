@@ -19,7 +19,7 @@ router.post('/login',userLogin);
 // Logout router
 // This router will be used to logout user
 router.post('/logout', (req, res) => {
-    res.send('Successfully logged out');
+    res.status(200).json({ message: 'Successfully logged out' });
 });
 
 // Profile router
