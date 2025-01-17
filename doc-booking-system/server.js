@@ -13,6 +13,8 @@ const authRouters = require('./src/routes/auth');
 // Initailize the app
 const app = express();
 
+const path = require('path');
+
 // Port setup
 const PORT = process.env.PORT || 3000;
 
@@ -40,10 +42,8 @@ app.use('/api/appointment', appointmentRouter);
 // Doctor router to handle all the doctor routes
 app.use('/api/doctor', doctorRouter);
 
-// Home route
-app.get('/', (req, res) => {
-    res.send('Welcome to DocBook your number one booking system');
-});
+// Static files in public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // The route that will handle 404, routes not found fallback
 app.use((req, res) => {
