@@ -134,10 +134,11 @@ const myProfile = async (req, res) => {
         //Initialize db
         const db = getDb();
 
-        // convert
+        // Covert userId to objectId
         const objectId = new ObjectId(userId)
 
         // Find user in databse
+        // Extract only username, email and createdAt from the db
         const user = await db.collection('users').findOne({ _id: objectId }, 'username email createdAt');
         
         // If the user found send the user data back to the user
@@ -157,7 +158,6 @@ const myProfile = async (req, res) => {
         res.send(500).json('Eish sorry an internal server error occurred')
     }
 };
-
 
 
 // Exports register
