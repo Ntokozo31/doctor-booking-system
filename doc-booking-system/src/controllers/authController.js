@@ -113,8 +113,47 @@ const userLogin = async (req, res) => {
     }
 };
 
+// Get user profile
+const myProfile = async (req, res) => {
+    try {
+        // We get token from cookie
+        const tokenUser = req.cookie.token
+
+        // If no token is found we return a message with statusCode of 401
+        if (!tokenUser) {
+            return res.status(401).json({ message: 'Sorry no token provided'})
+        }
+
+        // We decode the token to extract userId
+        // Save userId in a variable called userId after it has be extracted
+        const decode = jwt.verify(tokenUser, JWT_SECRET);
+        const userId = decode.userId;
+
+        //Initialize db
+        const db = getDb();
+
+        // Find user in databse
+        const user = await db.collection('users').findOne({ userId });
+        
+        // If the user found send the user data back to the user
+        // If the user is not found we return the statusCode 404
+        if (user) {
+            return res.json({ user });
+        } else {
+            return res.json({ message: 'Sorry user not found'})
+        }
+    // Internal server error problem we return statusCode of 500
+    } catch (err) {
+        console.error(err);
+        res.send(500).json('Eish sorry an internal server error occurred')
+    }
+};
+
+
+
 // Exports register
 module.exports = {
     register,
-    userLogin
+    userLogin,
+    myProfile
 };
