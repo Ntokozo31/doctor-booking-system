@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt');
 // Import jwt
 const jwt = require('jsonwebtoken');
 
+const { ObjectId } = require('mongodb');
+
 // Import JWT_SECRET
 require('dotenv').config();
 
@@ -117,7 +119,7 @@ const userLogin = async (req, res) => {
 const myProfile = async (req, res) => {
     try {
         // We get token from cookie
-        const tokenUser = req.cookie.token
+        const tokenUser = req.cookies.token
 
         // If no token is found we return a message with statusCode of 401
         if (!tokenUser) {
@@ -132,15 +134,22 @@ const myProfile = async (req, res) => {
         //Initialize db
         const db = getDb();
 
+        // convert
+        const objectId = new ObjectId(userId)
+
         // Find user in databse
-        const user = await db.collection('users').findOne({ userId });
+        const user = await db.collection('users').findOne({ _id: objectId }, 'username email createdAt');
         
         // If the user found send the user data back to the user
         // If the user is not found we return the statusCode 404
         if (user) {
-            return res.json({ user });
+            return res.status(200).json({
+                username: user.username,
+                email: user.email,
+                joined: user.createdAt
+            });
         } else {
-            return res.json({ message: 'Sorry user not found'})
+            return res.status(404).json({ message: 'Sorry user not found'})
         }
     // Internal server error problem we return statusCode of 500
     } catch (err) {
