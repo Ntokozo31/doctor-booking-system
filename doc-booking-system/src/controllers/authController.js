@@ -62,6 +62,7 @@ const userLogin = async (req, res) => {
         // Extract email and password in req.bod
         const { email, password } = req.body
 
+        // Initialize db
         const db = getDb();
 
         // Find the user by email in our database
@@ -85,11 +86,27 @@ const userLogin = async (req, res) => {
         // We include userId, username and email in the token
         // Set the token to expire in 1 hour
         const userToken = jwt.sign(
-            { userId: user._id, username: user.username, email: user.email },
+            { userId: user._id },
             JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN }
         )
-        res.status(200).json({ message: 'Successfully logged in', userToken });
+
+        // Set the token in a cookie
+        // The token will be stored in a cookie
+        // The cookie will be httpOnly
+        // The cookie will not be secure for now since we are on development
+        // The cookie will have to expire in 1 hour
+        // Set sameSite to Strict
+        // StatusCode of 200 after storing the token in a cookie, then user will be logged in 
+        res.cookie('token', userToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Strict',
+            maxAge: 60 * 60 * 1000
+        })
+        res.status(200).json({ message: 'Successfully logged in' });
+
+    // Internal server error problem we return a statusCode of 500
     } catch(err) {
         console.error(err);
         res.status(500).json({ message: 'Eish sorry an internal server error occurred' });
