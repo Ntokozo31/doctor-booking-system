@@ -10,10 +10,16 @@ const cors = require('cors');
 // Import routes
 const authRouters = require('./src/routes/auth');
 
+// Import cookie parser
+const cookieParser = require('cookie-parser');
+
 // Initailize the app
 const app = express();
 
 const path = require('path');
+
+// Cookie parser
+app.use(cookieParser());
 
 // Port setup
 const PORT = process.env.PORT || 3000;
