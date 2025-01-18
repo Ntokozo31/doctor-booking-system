@@ -1,11 +1,25 @@
 // Import getDb from db
 const { getDb } = require('../config/db');
 
+// Import ObjectId from mongodb
 const { ObjectId } = require('mongodb');
+
+// Import jwt from jsonwebtoken
+const jwt = require('jsonwebtoken');
+
+// Import dotenv
+require('dotenv').config();
+
+// Intialize JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // book appointment with doctor
 const bookAppointment = async (req, res) => {
     try {
+        // Extract token from cookie
+        // If no token is found we ruturn a statusCode of 401
+        // We decode the token to get userId
+        // Save userId in a variable called userId after it has been extracted
         // Extract userid, specialization, location, days and time in req.bod
         // Validate al fields that are being extracted in req.body
         // If one or more fields are empty we return statusCode of 400
@@ -14,7 +28,13 @@ const bookAppointment = async (req, res) => {
         // Find available doctor based on preference of user (speciality,location,days and time)
         // If no doctor being found we return a statusCode of 404
         // Create new appointment for user and store it in our Database
-        const { userId, speciality, location, days, time } = req.body;
+        const token = req.cookies.token
+        if (!token) {
+            return res.status(401).json({ message: 'Sorry no token provided'})
+        }
+        const decode = jwt.verify(token, JWT_SECRET)
+        const userId = decode.userId
+        const { speciality, location, days, time } = req.body;
         if (!userId || !speciality || !location || !days || !time) {
             return res.status(400).json({ message: 'Sorry all this field are required'})
         }
