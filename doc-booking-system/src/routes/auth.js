@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import database
-const { register, userLogin } = require('../controllers/authController');
+const { register, userLogin, myProfile } = require('../controllers/authController');
 
 // Registration router
 // This router will be used to register user
@@ -24,9 +24,10 @@ router.post('/logout', (req, res) => {
 
 // Profile router
 // This router will be used to get user profile
-router.get('/profile/:id', (req, res) => {
-    res.send('User profile successfully retrieved');
-});
+router.get('/profile', myProfile);
+//(req, res) => {
+    //res.send('User profile successfully retrieved');
+//});
 
 // Export router
 module.exports = router;
