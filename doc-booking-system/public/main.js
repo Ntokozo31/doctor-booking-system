@@ -1,7 +1,7 @@
 // We register the user
-// Get signupForm element by id
+// Use DOMContentloaded event to make sure the DOM is fully loaded before we start using the DOM
 document.addEventListener('DOMContentLoaded', () => {
-
+    // Get signupForm element and add an event listener to it
     document.getElementById('signupForm').addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // We get the response data
             const data = await response.json();
-            // If the response is ok we display a success message
-            // If the response did not succeed we also display a message related to the error
+            // If the response is ok we display a green success message
+            // If the response did not succeed we display a red message related to that error
             if (response.ok) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'green';
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
             }
-        // If there is an error we catch the error and display a message
+        // If there is an internal error we catch it and display a red message
         } catch (error) {
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
@@ -50,9 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // login the user
+    // Get loginForm element and add an event listener to it
     document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault();
-
+        // Get user data email and password and assign it to loginUser
         const loginUser = {
             email: document.getElementById('loginEmail').value,
             password: document.getElementById('loginPassword').value,
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
+            // Fetch request to login the user
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -67,9 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(loginUser)
             })
-
+            // We get the response data
             const data = await response.json();
 
+            // If the response is ok we display a green success message and log the user in
+            // If the response did not succeed we display a red message related to that error
             if (response.ok) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'green';
@@ -81,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage.textContent = data.message
                 showMessage.style.color = 'red'
             }
+            // If there is an internal error we catch it and display a red message
         } catch (error) {
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
