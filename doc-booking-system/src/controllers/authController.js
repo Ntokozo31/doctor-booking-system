@@ -121,6 +121,11 @@ const myProfile = async (req, res) => {
         // We get token from cookie
         const tokenUser = req.cookies.token
 
+        // We check if the requested profile id matches the logged in user id
+        // If the id does not match we return a statusCode of 403
+        if (req.params.id !== req.userId) {
+            return res.status(403).json( { message: 'Forbidden please view your own profile'});
+        }
         // If no token is found we return a message with statusCode of 401
         if (!tokenUser) {
             return res.status(401).json({ message: 'Sorry no token provided'})
@@ -159,10 +164,23 @@ const myProfile = async (req, res) => {
     }
 };
 
+// User logout
+// This function will be used to logout user
+// We will clear the cookie
+// Then the user will be logged out and redirected to the login page
+const userLogout = async (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Strict'
+    })
+        return res.status(200).json({ message: 'Successfully logged out bye bye' });
+}
 
 // Exports register
 module.exports = {
     register,
     userLogin,
-    myProfile
+    myProfile,
+    userLogout
 };
