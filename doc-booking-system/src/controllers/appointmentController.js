@@ -17,39 +17,40 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const bookAppointment = async (req, res) => {
     try {
         // Extract token from cookie
-        // If no token is found we ruturn a statusCode of 401
-        // We decode the token to get userId
-        // Save userId in a variable called userId after it has been extracted
-        // Extract userid, specialization, location, days and time in req.bod
-        // Validate al fields that are being extracted in req.body
-        // If one or more fields are empty we return statusCode of 400
-        // Validate userId
-        // Validate user
-        // Find available doctor based on preference of user (speciality,location,days and time)
-        // If no doctor being found we return a statusCode of 404
-        // Create new appointment for user and store it in our Database
+        // If no token is found we return a statusCode of 401
         const token = req.cookies.token
         if (!token) {
             return res.status(401).json({ message: 'Sorry no token provided'})
         }
+        //We decode the token to get userId
+        //Sve userId in a variable called userId after it has been extracted
         const decode = jwt.verify(token, JWT_SECRET)
         const userId = decode.userId
+
+        // Extract speciality, location, days and time in req.body
+        // If one or more fields are empty we return a statusCode of 400
         const { speciality, location, days, time } = req.body;
         if (!userId || !speciality || !location || !days || !time) {
             return res.status(400).json({ message: 'Sorry all this field are required'})
         }
 
+        // Iniatialize db
         const db = getDb();
 
+        // We validate userId
+        // If userId is not valid we return a statusCode of 400
         if (!ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Sorry invalid user id'})
         }
         
+        // We find user in our database
+        // If user is not found we return a statusCode of 400
         const user = await db.collection('users').findOne({_id: new ObjectId(userId)})
         if (!user) {
             return res.status(400).json({ message: 'Sorry user does not exist'})
         }
 
+        // We find available doctor based on preference of user (speciality, location, days and time)
         const doctor = await db.collection('doctors').findOne({
             speciality,
             location,
@@ -58,10 +59,12 @@ const bookAppointment = async (req, res) => {
             'availability.endTime': {$gte: time}
         });
 
+        // If no doctor is found we return a statusCode of 404
         if (!doctor) {
             return res.status(404).json({ message: 'Sorry no doctor available found for this date'})
         }
 
+        // We create new appointment for user and store it in our Database
         const docBook = {
             userId: new ObjectId(userId),
             doctorId: doctor._id,
@@ -73,6 +76,8 @@ const bookAppointment = async (req, res) => {
             status: 'booked'
         }
 
+        // We insert the appointment in our database
+        // We return a statusCode of 201 if the appointment is successfully created
         await db.collection('appointments').insertOne(docBook)
         res.status(201).json({ message: 'Your Appointment Booking is now Complete!', Details: {
             doctorName: docBook.doctorName,
@@ -93,14 +98,43 @@ const bookAppointment = async (req, res) => {
 // Get user appointment
 const allAppointment = async (req, res) => {
     try {
-        // Get all user appointment
+        // We get token from cookie
+        const tokenUser = req.cookies.token
+
+        // If no token is found we return a statusCode of 401
+        if (!tokenUser) {
+            return res.status(401).json({ message: 'No token provided'})
+        }
+
+        // We decode the token to extract userId
+        // Save userId in a variable called userId after it has been extracted
+        const decode = jwt.verify(tokenUser, JWT_SECRET);
+        const userIdFromToken = decode.userId
+
+        // Initailize db
+        // Conver userId to objectId
+        // We find all appointment for user in our database
+        // We extract only doctorName, location, speciality, days, time and status
         const db = getDb();
-        const userId = req.params.userId
-        const userAppointment = await db.collection('appointments').findOne({userId});
-        if (!userAppointment) {
+        const objectId = new ObjectId(userIdFromToken)
+        const userAppointment = await db.collection('appointments').find({ userId: objectId },
+            {projection: {
+                _id: 0,
+                doctorName: 1,
+                location: 1,
+                speciality: 1,
+                days: 1,
+                time: 1,
+                status:1}})
+                .toArray();
+
+        // If no appointment is found we return a statusCode of 404
+        // If appointment is found we return the appointment to the user in an array
+        if (userAppointment.length === 0) {
             return res.status(404).json({ message: 'Sorry you dont have any appointment!'})
         }
-        res.send(userAppointment)
+        res.status(200).json(userAppointment)
+    // We catch an error if its related to our server error
     } catch (err) {
         console.error('Eish sorry an internal server error occurred')
     }
