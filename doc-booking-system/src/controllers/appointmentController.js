@@ -64,6 +64,14 @@ const bookAppointment = async (req, res) => {
             return res.status(404).json({ message: 'Sorry no doctor available found for this date'})
         }
 
+        // We check if user already have a pending appointment
+        // If user already have a pedding appointment we return a statusCode of 400
+        const alreadyBooked = await db.collection('appointments').findOne({
+            userId: new ObjectId(userId),
+            status: 'booked' });
+        if (alreadyBooked) {
+            return res.status(400).json({ message: 'Sorry you already have a pedding appointment to attend' })
+        }
         // We create new appointment for user and store it in our Database
         const docBook = {
             userId: new ObjectId(userId),
