@@ -1,6 +1,6 @@
 // Import express
 const express = require('express');
-const { bookAppointment, allAppointment } = require('../controllers/appointmentController');
+const { bookAppointment, allAppointment, userUpdateAppointment } = require('../controllers/appointmentController');
 
 // Initialize the router
 const router = express.Router();
@@ -15,9 +15,9 @@ router.get('/all/', allAppointment);
 
 // Update appointment
 // This route will be used to udate an appointment
-router.put('/update/:id', (req, res) => {
-    res.send('Your appointment has been updated successfully');
-});
+router.put('/update', userUpdateAppointment);
+    //res.send('Your appointment has been updated successfully');
+//});
 
 // Cancel appointment
 // This route will be used to cancel an appointment
