@@ -20,7 +20,7 @@ const bookAppointment = async (req, res) => {
         // If no token is found we return a statusCode of 401
         const token = req.cookies.token
         if (!token) {
-            return res.status(401).json({ message: 'Sorry no token provided'})
+            return res.status(401).json({ message: 'Sorry no token provided, Please try to login again'})
         }
         //We decode the token to get userId
         //Sve userId in a variable called userId after it has been extracted
@@ -61,7 +61,7 @@ const bookAppointment = async (req, res) => {
 
         // If no doctor is found we return a statusCode of 404
         if (!doctor) {
-            return res.status(404).json({ message: 'Sorry no doctor available found for this date'})
+            return res.status(404).json({ message: 'No doctor available this date, please book another date'})
         }
 
         // We check if user already have a pending appointment
@@ -147,9 +147,82 @@ const allAppointment = async (req, res) => {
         console.error('Eish sorry an internal server error occurred')
     }
 };
+const userUpdateAppointment = async (req, res) => {
+    try {
+        // Extract token from cookie
+        const token = req.cookies.token
+        if (!token) {
+            return res.status(401).json({ message: 'Sorry no token provided'})
+        }
+        const decode = jwt.verify(token, JWT_SECRET)
+        const userIdFromToken = decode.userId
+
+        // Extract speciality, location, days and time in req.body
+        const { doctorId, speciality, location, days, time } = req.body;
+
+        // Iniatialize db
+        const db = getDb();
+        const objectId = new ObjectId(userIdFromToken)
+
+        // Check if user has a pending appointment or not
+        const alreadyBooked = await db.collection('appointments').findOne({
+            userId: objectId,
+            status: 'booked'
+        });
+
+        if (!alreadyBooked) {
+            return res.status(400).json({ message: 'You dont have a pending appointment, please book one first!'})
+        }
+
+        // We find available doctor based on preference of user (speciality, location, days and time)
+        const doctor = await db.collection('doctors').findOne({
+            speciality,
+            location,
+            'availability.days': days,
+            'availability.startTime': {$lte: time},
+            'availability.endTime': {$gte: time}
+        });
+
+        if (!doctor) {
+            return res.status(404).json({ message: 'No doctor available for this date, Please book another date'})
+        }
+
+        const docBook = {
+            userId: objectId,
+            doctorId: new ObjectId(doctorId),
+            speciality,
+            location,
+            days,
+            time,
+            status: 'booked'
+        };
+
+        const update = await db.collection('appointments').updateOne({
+            userId: objectId,
+            status: 'booked'},
+            {$set: docBook}
+        )
+
+        if (update.modifiedCount === 0) {
+            return res.status(400).json({ message: 'Sorry appointment was not updated'})
+        }
+
+        res.status(200).json({ message: 'Your appointment has successfully updated', Details: {
+            doctorName: docBook.doctorName,
+            location: docBook.location,
+            days: docBook.days,
+            time: docBook.time,
+            status: docBook.status
+        }})
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred' })
+    }
+}
 
 // Export Module
 module.exports = { 
     bookAppointment,
-    allAppointment
+    allAppointment,
+    userUpdateAppointment
 };
