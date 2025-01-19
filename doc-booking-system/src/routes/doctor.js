@@ -18,23 +18,5 @@ router.get('/all/docs', allDoctors);
 // This route will be used to get doctor by name
 router.get('/doc/:name', doctorByName);
 
-// New doctor to the system
-// This route will be used to add new doctor to the system (admin)
-router.post('/new/doc', (req, res) => {
-    res.send('New doctor successfully added');
-});
-
-// Update doctor details
-// This route will be used to update doctor details (admin)
-router.put('/update/doc/:id', (req, res) => {
-    res.send('Doctor details successfully updated');
-});
-
-// Delete doctor from the system
-// This route will be used to delete doctor from the system (admin)
-router.delete('/delete/doc/:id', (req, res) => {
-    res.send('Doctor successfully deleted');
-});
-
 // Export router
 module.exports = router;
