@@ -11,7 +11,7 @@ router.post('/create', bookAppointment);
 
 // Get all appointments for that user
 // This route will be used to get all appointment for user
-router.get('/all/:id', allAppointment);
+router.get('/all/', allAppointment);
 
 // Update appointment
 // This route will be used to udate an appointment
