@@ -47,6 +47,29 @@ const register = async (req, res) => {
         // Add new user to database
         const newUser = { username, email, password: hashingPassword, createdAt: new Date()};
         await db.collection('users').insertOne(newUser);
+
+        // Generate jwt token for new user
+        // We include userId in the token as well as JWT_SECRET and set the token to expire...
+        const userToken = jwt.sign(
+            { userId: newUser._id},
+            JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN}
+        )
+
+        // Set the token in a cookie
+        // The token will be stored in a cookie
+        // The cookie will be httpOnly
+        // Th cookie will not be secure for now since we are on development
+        // The cookie will have to expire in 1 hour
+        // Set sameSite to Strict
+        // StatusCode of 201 after storing the token in a cookie, then user will be registed
+        res.cookie('token', userToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Strict',
+            maxAge: 60 * 60 * 1000
+        })
+
         res.status(201).json({ message: `Congratulations ${username} registraion was successful` });
     // Internal server error problem we return a statusCode of 500
     } catch (err) {
@@ -85,8 +108,7 @@ const userLogin = async (req, res) => {
         }
 
         // Genarate jwt token
-        // We include userId, username and email in the token
-        // Set the token to expire in 1 hour
+        // We include userId in the token as well as JWT_SECRET and the token to expire...
         const userToken = jwt.sign(
             { userId: user._id },
             JWT_SECRET,
@@ -145,14 +167,13 @@ const myProfile = async (req, res) => {
         // Find user in databse
         // Extract only username, email and createdAt from the db
         const user = await db.collection('users').findOne({ _id: objectId }, 'username email createdAt');
-        
         // If the user found send the user data back to the user
         // If the user is not found we return the statusCode 404
         if (user) {
             return res.status(200).json({
                 username: user.username,
                 email: user.email,
-                joined: user.createdAt
+                joined_DocBook: user.createdAt
             });
         } else {
             return res.status(404).json({ message: 'Sorry user not found'})
