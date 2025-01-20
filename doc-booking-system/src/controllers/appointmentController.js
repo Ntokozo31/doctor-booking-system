@@ -291,32 +291,35 @@ const userCancelAppointment = async (req, res) => {
 
 const availableSlots = async (req, res) => {
     try {
-        const tokenUser = req.cookies.token
-        if (!tokenUser) {
-            return res.status(400).json({ message: 'No token provided, Please login and try again!'})
+        const tokenUser = req.cookies.token;
+        const decode = jwt.verify(tokenUser, JWT_SECRET);
+
+        const { speciality, location, days } = req.body;
+        if (!speciality || !location || !days) {
+            return res.status(400).json({ message: 'Sorry all fields are required'})
         }
-
-        const decode = jwt.verify(tokenUser, JWT_SECRET)
-        const userIdFromToken = decode.userId
-
-        const { speciality, location, days, time} = req.body
 
         const db = getDb();
-
-        const slots = db.collection('doctors').find({
+        const availableSlots = await db.collection('doctors').findOne({
             speciality,
             location,
-            'availability.days': days,
-            'availability.startTime': {$lte: time},
-            'availability.endTime': {$gte: time}
+            'availability.days': days
         })
 
-
-        if (slots.length === 0) {
-            return res.status(404).json({ message: 'Sorry no available slot found at this moment'})
+        if (!availableSlots) {
+            return res.status(404).json({ message: 'Sorry no available slots for this date try to book another date'})
         }
 
-        res.status(200).json(slots)
+        res.status(200).json({ message: 'Available slots', Details:
+            {
+            doctorName: availableSlots.name,
+            location: availableSlots.location,
+            speciality: availableSlots.speciality,
+            days: availableSlots.availability.days,
+            startTime: availableSlots.availability.startTime,
+            endTime: availableSlots.availability.endTime
+
+        }})
 
     } catch (err) {
         console.error(err)
