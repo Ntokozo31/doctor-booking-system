@@ -230,31 +230,42 @@ const userUpdateAppointment = async (req, res) => {
         res.status(500).json({ message: 'Eish sorry an internal server error occurred' })
     }
 };
-
+// We cancel user appointment
 const userCancelAppointment = async (req, res) => {
     try {
+
+        // Extract token from cookies
+        // If no token is found we return a statusCode of 400
         const tokenUser = req.cookies.token
         if (!tokenUser) {
             return res.status(400).json({ message: 'No token provided, Please login and try again'})
         }
 
+        // Extract doctorId, speciality, location, days and time in req.body
+        const { doctorId, speciality, location, days, time } = req.body;
+
+        // We decode the token to get userId
+        // Save userId in a variable called userIdFromToken after it has been extracted
         const decode = jwt.verify(tokenUser, JWT_SECRET)
         const userIdFromToken = decode.userId
 
-        const { doctorId, speciality, location, days, time } = req.body
-
+        // Intialize db
+        // Convert userId to objectId
         const db = getDb();
         const objectId = new ObjectId(userIdFromToken)
 
+        // Check if user has a pending appointment or not for user in our db
         const alreadyBooked = await db.collection('appointments').findOne({
             userId: objectId,
             status: 'booked'
         })
 
+        // If user does not have a pending appointment we return a statusCode of 400
         if (!alreadyBooked) {
             return res.status(400).json({ message: 'You dont have a pending appointment! Please book one first'})
         }
 
+        // We cancel the appointment for user in our database
         const docBook = {
             userId: objectId,
             doctorId: new ObjectId(doctorId),
@@ -263,53 +274,63 @@ const userCancelAppointment = async (req, res) => {
             days: days,
             time: time,
             status: 'Cancelled'
-        }
+        };
 
+
+
+        // We update and store new appointment in our database
         const cancel = await db.collection('appointments').updateOne({
             userId: objectId,
             status: 'booked'},
             {$set: docBook}
         )
-
+        // If appointment was not cancelled we return a statusCode of 400
         if (cancel.modifiedCount === 0) {
             return res.status(400).json({ message: 'Sorry appointment was not cancelled'})
         }
 
+        // If appointment was cancelled we return a statusCode of 200 with new appointment details
         res.status(200).json({ message: 'Your appointment was successufully cancelled', Details : {
-            doctorName: docBook.doctorName,
-            speciality: docBook.speciality,
-            location: docBook.location,
-            days: docBook.days,
-            time: docBook.time,
-            status: docBook.status
+            doctorName: alreadyBooked.doctorName,
+            speciality: alreadyBooked.speciality,
+            location: alreadyBooked.location,
+            days: alreadyBooked.days,
+            time: alreadyBooked.time,
+            status: 'Cancelled',
         }})
+    // Catch an error if its related to our server error
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
     }
 };
 
+// Get available slots for user to book
 const availableSlots = async (req, res) => {
     try {
-        const tokenUser = req.cookies.token;
-        const decode = jwt.verify(tokenUser, JWT_SECRET);
-
+        // Extract speciality, location, days in req.body
+        // If one or more fields are empty we return a statusCode of 400
         const { speciality, location, days } = req.body;
         if (!speciality || !location || !days) {
             return res.status(400).json({ message: 'Sorry all fields are required'})
         }
 
+        // Initialize db
         const db = getDb();
+
+        // We find available doctor based on preference of user (speciality, location, days)
         const availableSlots = await db.collection('doctors').findOne({
             speciality,
             location,
             'availability.days': days
         })
 
+        // If no available slots are found we return a statusCode of 404
         if (!availableSlots) {
             return res.status(404).json({ message: 'Sorry no available slots for this date try to book another date'})
         }
 
+        // If available slots are found we return a statusCode of 200 with available slots details
         res.status(200).json({ message: 'Available slots', Details:
             {
             doctorName: availableSlots.name,
@@ -320,7 +341,7 @@ const availableSlots = async (req, res) => {
             endTime: availableSlots.availability.endTime
 
         }})
-
+    // Catch an error if its related to our server error
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
