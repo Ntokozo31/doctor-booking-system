@@ -1,6 +1,12 @@
 // Import express
 const express = require('express');
-const { bookAppointment, allAppointment, userUpdateAppointment } = require('../controllers/appointmentController');
+const {
+    bookAppointment,
+    allAppointment,
+    userUpdateAppointment,
+    userCancelAppointment,
+    availableSlots
+} = require('../controllers/appointmentController');
 
 // Initialize the router
 const router = express.Router();
@@ -21,15 +27,15 @@ router.put('/update', userUpdateAppointment);
 
 // Cancel appointment
 // This route will be used to cancel an appointment
-router.delete('/cancel/:id', (req, res) => {
-    res.send('Your appointment has been cancelled successfully');
-});
+router.patch('/cancel', userCancelAppointment);
+    //res.send('Your appointment has been cancelled successfully');
+//});
 
 // Check available slots
 // This route will be used to ckeck available slots
-router.get('/slots', (req, res) => {
-    res.send('Available slots retrieved successfully');
-});
+router.get('/slots', availableSlots);
+    //res.send('Available slots retrieved successfully');
+//});
 
 // Export the router
 module.exports = router;
