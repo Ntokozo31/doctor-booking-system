@@ -18,13 +18,13 @@ const bookAppointment = async (req, res) => {
     try {
         // Extract token from cookie
         // If no token is found we return a statusCode of 401
-        const token = req.cookies.token
-        if (!token) {
+        const tokenUser = req.cookies.token
+        if (!tokenUser) {
             return res.status(401).json({ message: 'Sorry no token provided, Please try to login again'})
         }
         //We decode the token to get userId
         //Sve userId in a variable called userId after it has been extracted
-        const decode = jwt.verify(token, JWT_SECRET)
+        const decode = jwt.verify(tokenUser, JWT_SECRET)
         const userId = decode.userId
 
         // Extract speciality, location, days and time in req.body
@@ -111,7 +111,7 @@ const allAppointment = async (req, res) => {
 
         // If no token is found we return a statusCode of 401
         if (!tokenUser) {
-            return res.status(401).json({ message: 'No token provided'})
+            return res.status(401).json({ message: 'No token provided, Please try to login and try again'})
         }
 
         // We decode the token to extract userId
@@ -153,7 +153,7 @@ const userUpdateAppointment = async (req, res) => {
         // If no token is found we return a statusCode of 401
         const token = req.cookies.token
         if (!token) {
-            return res.status(401).json({ message: 'Sorry no token provided'})
+            return res.status(401).json({ message: 'Sorry no token provided, Please login and try again'})
         }
 
         // We decode the token to get userId
@@ -229,11 +229,106 @@ const userUpdateAppointment = async (req, res) => {
         console.error(err)
         res.status(500).json({ message: 'Eish sorry an internal server error occurred' })
     }
+};
+
+const userCancelAppointment = async (req, res) => {
+    try {
+        const tokenUser = req.cookies.token
+        if (!tokenUser) {
+            return res.status(400).json({ message: 'No token provided, Please login and try again'})
+        }
+
+        const decode = jwt.verify(tokenUser, JWT_SECRET)
+        const userIdFromToken = decode.userId
+
+        const { doctorId, speciality, location, days, time } = req.body
+
+        const db = getDb();
+        const objectId = new ObjectId(userIdFromToken)
+
+        const alreadyBooked = await db.collection('appointments').findOne({
+            userId: objectId,
+            status: 'booked'
+        })
+
+        if (!alreadyBooked) {
+            return res.status(400).json({ message: 'You dont have a pending appointment! Please book one first'})
+        }
+
+        const docBook = {
+            userId: objectId,
+            doctorId: new ObjectId(doctorId),
+            speciality: speciality,
+            location: location,
+            days: days,
+            time: time,
+            status: 'Cancelled'
+        }
+
+        const cancel = await db.collection('appointments').updateOne({
+            userId: objectId,
+            status: 'booked'},
+            {$set: docBook}
+        )
+
+        if (cancel.modifiedCount === 0) {
+            return res.status(400).json({ message: 'Sorry appointment was not cancelled'})
+        }
+
+        res.status(200).json({ message: 'Your appointment was successufully cancelled', Details : {
+            doctorName: docBook.doctorName,
+            speciality: docBook.speciality,
+            location: docBook.location,
+            days: docBook.days,
+            time: docBook.time,
+            status: docBook.status
+        }})
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
+    }
+};
+
+const availableSlots = async (req, res) => {
+    try {
+        const tokenUser = req.cookies.token
+        if (!tokenUser) {
+            return res.status(400).json({ message: 'No token provided, Please login and try again!'})
+        }
+
+        const decode = jwt.verify(tokenUser, JWT_SECRET)
+        const userIdFromToken = decode.userId
+
+        const { speciality, location, days, time} = req.body
+
+        const db = getDb();
+
+        const slots = db.collection('doctors').find({
+            speciality,
+            location,
+            'availability.days': days,
+            'availability.startTime': {$lte: time},
+            'availability.endTime': {$gte: time}
+        })
+
+
+        if (slots.length === 0) {
+            return res.status(404).json({ message: 'Sorry no available slot found at this moment'})
+        }
+
+        res.status(200).json(slots)
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
+    }
 }
 
 // Export Module
 module.exports = { 
     bookAppointment,
     allAppointment,
-    userUpdateAppointment
+    userUpdateAppointment,
+    userCancelAppointment,
+    availableSlots
 };
