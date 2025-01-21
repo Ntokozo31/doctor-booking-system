@@ -219,7 +219,34 @@ const updateUserProfile = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Eish sorry an internal server error occurred' });
     }
-}
+};
+
+const deleteUserProfile = async (req, res) => {
+    try {
+        const tokenUser = req.cookies.token
+        if (!tokenUser) {
+            return res.status(404).json({ message: 'No token provided, Please login and try again'})
+        }
+
+        const decode = jwt.verify(tokenUser, JWT_SECRET);
+        const userIdFromToken = decode.userId
+
+        const db = getDb();
+        const userId = new ObjectId(userIdFromToken)
+
+        const deleteUser = await db.collection('users').deleteOne({ _id: userId})
+
+        if (deleteUser.length === 0) {
+            return res.status(404).json({ message: 'Sorry we were unable to delete your profile'})
+        }
+
+        res.status(200).json({ message: 'Sad to see you going... Bye'})
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
+    }
+};
+
 
 // User logout
 // This function will be used to logout user
@@ -240,5 +267,6 @@ module.exports = {
     userLogin,
     myProfile,
     updateUserProfile,
+    deleteUserProfile,
     userLogout
 };
