@@ -185,6 +185,42 @@ const myProfile = async (req, res) => {
     }
 };
 
+// update user profile
+const updateUserProfile = async (req, res) => {
+    try {
+        const tokenUser = req.cookies.token;
+        if (!tokenUser) {
+            return res.status(401).json({ message: 'Sorry no token provuded'})
+        }
+
+        const decode = jwt.verify(tokenUser, JWT_SECRET);
+        const userId = decode.userId;
+
+        const { username, email } = req.body;
+
+        if (!username || !email) {
+            return res.status(400).json({ message: 'All fields are required'})
+        }
+
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({ message: 'Sorry invalid email format'});
+        }
+
+        const db = getDb();
+        const objectId = new ObjectId(userId)
+
+        const update = await db.collection('users').updateOne({ _id: objectId }, { $set: { username, email }});
+        if (update) {
+            return res.status(200).json({ message: 'User profile successfully updated' })
+        } else {
+            return res.status(404).json({ message: 'Sorry user not found' })
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Eish sorry an internal server error occurred' });
+    }
+}
+
 // User logout
 // This function will be used to logout user
 // We will clear the cookie
@@ -203,5 +239,6 @@ module.exports = {
     register,
     userLogin,
     myProfile,
+    updateUserProfile,
     userLogout
 };
