@@ -188,59 +188,84 @@ const myProfile = async (req, res) => {
 // update user profile
 const updateUserProfile = async (req, res) => {
     try {
+
+        // We get token from cookie
+        // If no token is found we return a message with statusCode of 401
         const tokenUser = req.cookies.token;
         if (!tokenUser) {
             return res.status(401).json({ message: 'Sorry no token provuded'})
         }
 
+        // W decode the token to extract userId
+        // Save userId in a variable called userId after it has be extracted
         const decode = jwt.verify(tokenUser, JWT_SECRET);
         const userId = decode.userId;
 
+        // Extract username and email from req.body
         const { username, email } = req.body;
 
+        // Validate the fields
+        // If username or email is not provided we return a statusCode of 400
         if (!username || !email) {
             return res.status(400).json({ message: 'All fields are required'})
         }
 
+        // Validate user email
+        // If email is an invalid format we return statusCode of 400
         if (!validator.isEmail(email)) {
             return res.status(400).json({ message: 'Sorry invalid email format'});
         }
 
+        // Initialize db
         const db = getDb();
         const objectId = new ObjectId(userId)
 
+        // Update the user profile
+        // If the user is found we update the user profile
+        // If the user is not found we return a statusCode of 404
         const update = await db.collection('users').updateOne({ _id: objectId }, { $set: { username, email }});
         if (update) {
             return res.status(200).json({ message: 'User profile successfully updated' })
         } else {
             return res.status(404).json({ message: 'Sorry user not found' })
         }
+    // Catch any internal server error and return a statusCode of 500
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Eish sorry an internal server error occurred' });
     }
 };
 
+// Delete user profile
 const deleteUserProfile = async (req, res) => {
     try {
+        // Extract token from cookie
+        // If no token is found we return a message with statusCode of 404
         const tokenUser = req.cookies.token
         if (!tokenUser) {
-            return res.status(404).json({ message: 'No token provided, Please login and try again'})
+            return res.status(404).json({ message: 'No token provided, Please login and try again'});
         }
 
+        // We decode the token to extract userId
+        // Save userId in a variable called userId after it has be extracted
         const decode = jwt.verify(tokenUser, JWT_SECRET);
-        const userIdFromToken = decode.userId
+        const userIdFromToken = decode.userId;
 
+        // Initialize db
+        // Convert userId to objectId
         const db = getDb();
-        const userId = new ObjectId(userIdFromToken)
+        const objectId = new ObjectId(userIdFromToken);
 
-        const deleteUser = await db.collection('users').deleteOne({ _id: userId})
-
+        // Delete user profile
+        // If the user is found we delete the user profile
+        // If the user is not found we return a statusCode of 404
+        const deleteUser = await db.collection('users').deleteOne({ _id: objectId});
         if (deleteUser.length === 0) {
             return res.status(404).json({ message: 'Sorry we were unable to delete your profile'})
         }
-
+        // If the user is deleted we return a statusCode of 200
         res.status(200).json({ message: 'Sad to see you going... Bye'})
+    // Catch any internal server error and return a statusCode of 500
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Eish sorry an internal server error occurred'})
