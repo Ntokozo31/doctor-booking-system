@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import database
-const { register, userLogin, myProfile, userLogout, updateUserProfile } = require('../controllers/authController');
+const { register, userLogin, myProfile, userLogout, updateUserProfile, deleteUserProfile } = require('../controllers/authController');
 
 // Registration router
 // This router will be used to register user
@@ -27,6 +27,10 @@ router.get('/profile/', myProfile);
 // Update profile router
 // This router will be used to update user profile
 router.put('/profile/update', updateUserProfile);
+
+// Delete router
+// This router will be used to delete user profile
+router.delete('/profile/delete', deleteUserProfile)
 
 // Export router
 module.exports = router;
