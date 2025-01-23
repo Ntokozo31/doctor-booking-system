@@ -61,7 +61,7 @@ const bookAppointment = async (req, res) => {
 
         // If no doctor is found we return a statusCode of 404
         if (!doctor) {
-            return res.status(404).json({ message: 'No doctor available this date, please book another date'})
+            return res.status(404).json({ message: 'No doctor available for this date, please book another date'})
         }
 
         // We check if user already have a pending appointment
