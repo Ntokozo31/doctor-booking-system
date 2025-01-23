@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/appointment/create', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -30,16 +31,28 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (response.status === 401) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
+                setTimeout(function () {
+                    window.location.href = 'home.html'
+                }, 2000);
             } else if (response.status === 400) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
+                setTimeout(function () {
+                    window.location.href = 'home.html'
+                }, 2000);
             } else {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
+                setTimeout(function () {
+                    window.location.href = 'home.html'
+                }, 2000);
             }
         } catch (error) {
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
+            setTimeout(function () {
+                window.location.href = 'home.html'
+            }, 2000);
         }
     });
 });
