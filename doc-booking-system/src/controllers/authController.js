@@ -66,11 +66,11 @@ const register = async (req, res) => {
         res.cookie('token', userToken, {
             httpOnly: true,
             secure: false,
-            sameSite: 'Strict',
+            sameSite: 'Lax',
             maxAge: 60 * 60 * 1000
         })
 
-        res.status(201).json({ message: `Congratulations ${username} registraion was successful` });
+        res.status(201).json({ message: `Congratulations ${username} registraion was successful`});
     // Internal server error problem we return a statusCode of 500
     } catch (err) {
         console.error(err);
@@ -125,7 +125,7 @@ const userLogin = async (req, res) => {
         res.cookie('token', userToken, {
             httpOnly: true,
             secure: false,
-            sameSite: 'Strict',
+            sameSite: 'Lax',
             maxAge: 60 * 60 * 1000
         })
         res.status(200).json({ message: 'Successfully logged in' });
