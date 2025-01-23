@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments - DocBook</title>
+    <link rel="stylesheet" href="user-appointment.css">
+</head>
+<body>
+    <header>
+        <h1><a href="home.html" class="app-name">DocBook</a></h1>
+        <nav>
+            <ul>
+                <li><a href="my-appointments.html" class="active">My Appointments</a></li>
+                <li><a href="available-slots.html">Available Slots</a></li>
+                <li><a href="find-doctors.html">Find Doctors</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>My Appointments</h2>
+        <div id="appointmentsContainer">
+            <div id="showMessage" class="message"></div>
+        </div>
+        <div id="noAppointments" style="display: none;">
+            <p>You don't have any appointments scheduled.</p>
+            <button id="bookNowBtn">Book Now</button></a>
+        </div>
+    </main>
+    <script src="user-appointment.js"></script>
+</body>
+</html>
