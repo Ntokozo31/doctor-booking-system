@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Scheduler</title>
+    <link rel="stylesheet" href="bookings.css">
+</head>
+<body>
+    <div class="booking-container">
+        <h1 class="booking-title">Schedule Your Appointment</h1>
+        <form class="appointment-form">
+            <div class="form-group">
+                <label for="specialty">Specialty Required:</label>
+                <select id="specialty" name="specialty" required>
+                    <option value="">Select a specialty</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="Radiologist">Radiologist</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">Preferred Location:</label>
+                <input type="text" id="location" name="location" placeholder="e.g., Downtown Clinic" required>
+            </div>
+            <div class="form-group">
+                <label for="days">Available Days:</label>
+                <select id="days" name="days" required>
+                    <option value="">Select a day</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time">Preferred Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <div id="showMessage" class="message"></div>
+            <button type="submit" class="schedule-btn">Confirm Appointment</button>
+        </form>
+    </div>
+    <script src="bookings.js"></script>
+</body>
+</html>
