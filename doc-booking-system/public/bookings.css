@@ -1,0 +1,155 @@
+:root {
+    --primary-color: #5d5c61;
+    --secondary-color: #b1a296;
+    --background-color: #f7f7f7;
+    --text-color: #30323d;
+    --accent-color: #557a95;
+  }
+  
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .booking-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .message {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+
+  }
+  
+  .booking-container::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  
+  .booking-container::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  
+  .booking-title {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+  }
+  
+  .booking-title::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin: 0.7rem auto 0;
+  }
+  
+  .booking-form {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  
+  input[type="text"],
+  input[type="time"],
+  select {
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="time"]:focus,
+  select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+  }
+  
+  .schedule-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .schedule-btn:hover {
+    background-color: #4a6b82;
+    transform: translateY(-2px);
+  }
+  
+  .schedule-btn:active {
+    transform: translateY(0);
+  }
+
+  .time-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .time-group input[type="time"] {
+    margin-right: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    .booking-container {
+      padding: 1.5rem;
+    }
+  
+    .checkbox-group {
+      grid-template-columns: 1fr;
+    }
+  }  
