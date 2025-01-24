@@ -150,7 +150,7 @@ const myProfile = async (req, res) => {
         }
         // If no token is found we return a message with statusCode of 401
         if (!tokenUser) {
-            return res.status(401).json({ message: 'Sorry no token provided'})
+            return res.status(401).json({ message: 'Sorry no token provided, Please login and try again' });
         }
 
         // We decode the token to extract userId
@@ -193,7 +193,7 @@ const updateUserProfile = async (req, res) => {
         // If no token is found we return a message with statusCode of 401
         const tokenUser = req.cookies.token;
         if (!tokenUser) {
-            return res.status(401).json({ message: 'Sorry no token provuded'})
+            return res.status(401).json({ message: 'Sorry no token provided, Please login and try again'})
         }
 
         // W decode the token to extract userId
