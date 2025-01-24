@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
         slotElement.className = 'slot';
         slotElement.innerHTML = `
             <h4>Doctor Name: ${details.doctorName}</h4>
-            <p>Location: ${details.location}</h4>
-            <p>Speciality: ${details.speciality}</h4>
-            <p>Days: ${details.days.join(', ')}</h4>
-            <p>Start Time: ${details.startTime}</h4>
+            <h4>Location: ${details.location}</h4>
+            <h4>Speciality: ${details.speciality}</h4>
+            <h4>Days: ${details.days.join(', ')}</h4>
+            <h4>Start Time: ${details.startTime}</h4>
             <h4>End Time: ${details.endTime}</h4>    
         `;
         slotsContainer.appendChild(slotElement);
