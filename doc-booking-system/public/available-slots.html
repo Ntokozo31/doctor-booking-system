@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Slots - DocBook</title>
+    <link rel="stylesheet" href="available-slots.css">
+</head>
+<body>
+    <header>
+        <h1><a href="bookings.html" class="app-name">DocBook</a></h1>
+        <nav>
+            <ul>
+                <li><a href="user-appointment.html">My Appointments</a></li>
+                <li><a href="available-slots.html" class="active">Available Slots</a></li>
+                <li><a href="find-doctors.html">Find Doctors</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Find Available Slots</h2>
+        <form id="slotSearchForm">
+            <div class="form-group">
+                <label for="speciality">Speciality:</label>
+                <select id="speciality" required>
+                    <option value="">Select a speciality</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="Radiologist">Radiologist</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" required>
+            </div>
+            <div class="form-group">
+                <label for="days">Date:</label>
+                <select id="days" name="days" required>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time">Preferred Time:</label>
+                <input type="time" id="time" required>
+            </div>
+            <button type="submit">Search Slots</button>
+        </form>
+        <div id="showMessage" class="message"></div>
+        <form id="slotsForm">
+            <div id="slotsContainer"></div>
+        </form>
+    </main>
+    <script src="available-slots.js"></script>
+</body>
+</html>
