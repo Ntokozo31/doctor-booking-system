@@ -1,20 +1,17 @@
-// Get all appointments for the user
-// Display appointments in the appointmentsContainer
+// We use the DOMContentloaded event to make sure the DOM is fully Loaded before we run the code
 document.addEventListener('DOMContentLoaded', function() {
+    // We get the appointmentsContainer, noAppointments, and bookNowBtn elements
     const appointmentsContainer = document.getElementById('appointmentsContainer');
     const noAppointments = document.getElementById('noAppointments');
     const bookNowBtn = document.getElementById('bookNowBtn');
-    const message = document.getElementById('showMessage').value;
+    const message = document.getElementById('showMessage');
 
-    // We will use this function to get all appointments for the user
+    // This function is used to get all appointments for the user
     const getAppointments = async () => {
         try {
-            // Fetch all appointments for the user
-            // We will use the /api/appointment/all endpoint
-            // This endpoint is protected and requires the user to be authenticated
-            // We will use the credentials: 'include' option to send the user's cookies
-            // This will allow the server to verify the user's identity
-            // The server will return a list of appointments for the user
+            // We make a GET request to our API endpoint
+            // We use method: 'GET' to get all appointments
+            // We set credentials: 'include' to send cookies
             const response = await fetch('/api/appointment/all', {
                 method: 'GET',
                 credentials: 'include',
@@ -22,83 +19,68 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                 },
             });
-                // Parse the JSON response
-                const data = await response.json();
 
-                // Check if the response is ok
-                // If the response is ok, return the data
-                // If the response is not ok, display an error message
-                if (response.ok) {
-                    return data;
-                } else if (response.status === 401) {
-                    showMessage.textContent = data.message;
-                    showMessage.style.display = 'red';
-                } else {
-                    showMessage.textContent = data.message;
-                    showMessage.style.display = 'none';
-                }
-        // If an error occurs, display an error message
+            // We parse the response
+            const data = await response.json();
+
+            // If the response is ok we return the data
+            // If the response status is 401, we display an error message
+            if (response.ok) {
+                return data;
+            } else if (response.status === 401) {
+                showMessage.textContent = data.message;
+                showMessage.style.color = 'red'
+            } else {
+                showMessage.textContent = data.message;
+                showMessage.style.color = 'red';
+            }
+        // Catch an errors and display an error message
         } catch (error) {
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
         }
-    }
+    };
 
-    // We will use this function to display the appointments in the appointmentsContainer
-    // This function will be called after we get the appointments
-    // The function will display the appointments in the appointmentsContainer
-    // If there are no appointments, the function will display a message
-    // The function will also add event listeners to the update and cancel buttons
-    // The update and cancel buttons will call the updateAppointment and cancelAppointment functions
+    // We display appointments in the appointmentsContainer
     function displayAppointments(appointments) {
-        console.log('appointments:', appointments);
+        // If there are no appointments,  we show the noAppointments message
         if (!appointments || appointments.length === 0) {
             noAppointments.style.display = 'block';
             return;
         }
 
-        // Loop through the appointments and display each appointment in the appointmentsContainer
-        // For each appointment, create an appointment card
-        // The appointment card will display the appointment details
-        // The appointment card will also have update and cancel buttons
-        // The update and cancel buttons will call the updateAppointment and cancelAppointment functions
+        // Clear the appointmentsContainer
+        appointmentsContainer.innerHTML = '';
+
+        // Loop through each appointment and create a card for it
+        // We set the data-id attribute to the appointment id
+        // We display the doctorName, speciality, location, days, time, and status
         appointments.forEach(appointment => {
             const appointmentCard = document.createElement('div');
             appointmentCard.className = 'appointment-card';
+            appointmentCard.setAttribute('data-id', appointment._id);
             appointmentCard.innerHTML = `
                 <h3>${appointment.doctorName}</h3>
-                <h4>Speciality: ${appointment.speciality}</h3>
+                <h4>Speciality: ${appointment.speciality}</h4>
                 <h4>Location: ${appointment.location}</h4>
                 <h4>Date: ${appointment.days}</h4>
                 <h4>Time: ${appointment.time}</h4>
                 <h4>Status: ${appointment.status}</h4>
                 <div class="appointment-actions">
-                    <button onclick="updateAppointment(${appointment.id})">Update</button>
-                    <button onclick="cancelAppointment(${appointment.id})">Cancel</button>
+                    <button onclick="cancelAppointment('${appointment._id}')">Cancel</button>
                 </div>
             `;
+            // We append the appointment card to the appointmentsContainer
             appointmentsContainer.appendChild(appointmentCard);
         });
     }
 
-    // Call the getAppointments function to get all appointments for the user
+    // We fetch and display the appointments when the page loads
     getAppointments().then(displayAppointments);
 
-    // Add an event listener to the bookNowBtn  button
-    // When the button is clicked, redirect the user to the bookings.html page
+    // Event listener for the "Book Now" button
+    // If user dont have any appointments we redirect to bookings page to book an appointment
     bookNowBtn.addEventListener('click', function() {
         window.location.href = 'bookings.html';
     });
 });
-
-// Implement the updateAppointment
-function updateAppointment(id) {
-    alert(`Update appointment ${id}`);
-}
-
-// Implement the cancelAppointment
-function cancelAppointment(id) {
-    if (confirm(`Are you sure you want to cancel appointment ${id}?`)) {
-        alert(`Appointment ${id} cancelled`);
-    }
-}
