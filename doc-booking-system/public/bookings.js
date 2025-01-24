@@ -26,33 +26,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'green';
                 setTimeout(function () {
-                    window.location.href = 'home.html'
-                }, 2000);
+                    window.location.href = 'user-appointment.html'
+                }, 7000);
             } else if (response.status === 401) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
                 setTimeout(function () {
                     window.location.href = 'home.html'
-                }, 2000);
+                }, 4000);
             } else if (response.status === 400) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
                 setTimeout(function () {
                     window.location.href = 'home.html'
-                }, 2000);
+                }, 4000);
             } else {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
                 setTimeout(function () {
-                    window.location.href = 'home.html'
-                }, 2000);
+                    window.location.href = 'available-slots.html'
+                }, 4000);
             }
         } catch (error) {
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
             setTimeout(function () {
                 window.location.href = 'home.html'
-            }, 2000);
+            }, 5000);
         }
     });
 });
