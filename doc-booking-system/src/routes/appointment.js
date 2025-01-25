@@ -24,7 +24,7 @@ router.patch('/cancel', userCancelAppointment);
 
 // Check available slots
 // This route will be used to ckeck available slots
-router.get('/slots', availableSlots);
+router.post('/slots', availableSlots);
 
 // Export the router
 module.exports = router;
