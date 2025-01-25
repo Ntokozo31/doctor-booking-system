@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const appointmentsContainer = document.getElementById('appointmentsContainer');
     const noAppointments = document.getElementById('noAppointments');
     const bookNowBtn = document.getElementById('bookNowBtn');
-    const message = document.getElementById('showMessage');
+    const showMessage = document.getElementById('showMessage');
 
     // This function is used to get all appointments for the user
     const getAppointments = async () => {
@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h4>Date: ${appointment.days}</h4>
                 <h4>Time: ${appointment.time}</h4>
                 <h4>Status: ${appointment.status}</h4>
-                <div class="appointment-actions">
-                    <button onclick="cancelAppointment('${appointment._id}')">Cancel</button>
+                <div id="cancelAppointment">
+                    <button onclick="cancelAppointment()" id="cancelButton">Cancel Appointment</button>
                 </div>
             `;
             // We append the appointment card to the appointmentsContainer
@@ -75,12 +75,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    cancelAppointment = async () => {
+        try {
+
+            const response = await fetch('/api/appointment/cancel', {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                //body: JSON.stringify({ appointmentId})
+            });
+
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                return data.Details;
+                //showMessage.textContent = data.message;
+                //showMessage.style.color = 'green';
+                //const appointments = await getAppointments();
+                //displayAppointments(data.Details);
+            } else {
+                showMessage.textContent = data.message;
+                showMessage.style.color = 'red';
+            }
+        } catch (error) {
+            showMessage.textContent = 'Sorry something went wrong';
+            showMessage.style.color = 'red';
+        }
+    }
+
+
     // We fetch and display the appointments when the page loads
     getAppointments().then(displayAppointments);
+    cancelAppointment(displayAppointments);
 
     // Event listener for the "Book Now" button
     // If user dont have any appointments we redirect to bookings page to book an appointment
     bookNowBtn.addEventListener('click', function() {
         window.location.href = 'bookings.html';
     });
+
 });
