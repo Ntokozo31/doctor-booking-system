@@ -3,7 +3,6 @@ const express = require('express');
 const {
     bookAppointment,
     allAppointment,
-    userCancelAppointment,
     availableSlots
 } = require('../controllers/appointmentController');
 
@@ -17,10 +16,6 @@ router.post('/create', bookAppointment);
 // Get all appointments for that user
 // This route will be used to get all appointment for user
 router.get('/all/', allAppointment);
-
-// Cancel appointment
-// This route will be used to cancel an appointment
-router.patch('/cancel', userCancelAppointment);
 
 // Check available slots
 // This route will be used to ckeck available slots
