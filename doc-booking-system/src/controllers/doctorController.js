@@ -32,12 +32,18 @@ const doctorByLocation = async (req, res) => {
         if (!location) {
             return res.status(400).json({ message: 'Please provide a location'});
         }
+
+        // Retrieve doctor by location in our db
+        // Get more info about that particular doctor (name, location, availability...) we avoid getting the doctor id
+        // If the doctor does not exist we return a statusCode 404
+        // If it a server error we return statusCode of 500
         const db = getDb();
         const doctor = await db.collection('doctors').find(
             { location: location},
             {   
                 projection: {
                     _id: 0,
+                    email: 0,
                 }
             }
         ).toArray();
