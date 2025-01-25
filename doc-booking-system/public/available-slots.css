@@ -144,3 +144,10 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.message {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+}
