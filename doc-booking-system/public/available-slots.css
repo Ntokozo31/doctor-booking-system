@@ -135,15 +135,6 @@ button:hover {
     background-color: var(--primary-color);
 }
 
-footer {
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 .message {
     margin-top: 20px;
