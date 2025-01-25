@@ -7,33 +7,17 @@ const { connectToDb, getDb } = require('./src/config/db');
 // Import cookie parser
 const cookieParser = require('cookie-parser');
 
-//Import cors
-//const cors = require('cors');
-
 // initialize the app
 const app = express();
 
 // Use cookie parser
 app.use(cookieParser());
 
-//const corsOptions = {
-    //origin: 'http://127.0.0.1:5500',
-    //credentials: true,
-//};
-
-// Import routes
-//const authRouters = require('./src/routes/auth');
-
+// Import path
 const path = require('path');
-
 
 // Port setup
 const PORT = process.env.PORT || 3000;
-
-// Global cors
-//app.use(cors());
-
-//app.use(cors(corsOptions));
 
 // Body parser for incoming requests
 app.use(express.json());
