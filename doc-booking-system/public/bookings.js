@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
                 setTimeout(function () {
-                    window.location.href = 'home.html'
+                    window.location.href = 'user-appointment.html'
                 }, 4000);
             } else {
                 showMessage.textContent = data.message;
