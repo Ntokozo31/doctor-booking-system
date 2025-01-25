@@ -20,9 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             time: document.getElementById('time').value,
         };
 
-        //loadingSpinner.classList.add('hidden');
-        //initialMessage.classList.add('hidden');
-
         // We make a POST request to our API endpoint
         // Use method: 'POST' to send the availableSlots data
         // Set credentials: ''include' to send cookies
