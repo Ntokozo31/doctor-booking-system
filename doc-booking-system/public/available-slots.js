@@ -1,14 +1,17 @@
 // We use DOMContentLoaded event to make sure the DOM is fully loaded before we run the code
 // We get the slotSearchForm, slotsContainer, and showMessage elements
+// Get loadingSpinner and initialMessage elements
 document.addEventListener('DOMContentLoaded', function() {
     const slotSearchForm = document.getElementById('slotSearchForm');
     const slotsContainer = document.getElementById('slotsContainer');
     const showMessage = document.getElementById('showMessage');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const initialMessage = document.getElementById('initialMessage');
 
     // We add an event listener to the slotSearchForm
     // Prevent the default form submission
     // Get the values of the speciality, location, days, and time fields
-    slotSearchForm.addEventListener('submit', async(event) => {
+    slotSearchForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const availableSlots = {
             speciality: document.getElementById('speciality').value,
@@ -17,11 +20,16 @@ document.addEventListener('DOMContentLoaded', function() {
             time: document.getElementById('time').value,
         };
 
+        //loadingSpinner.classList.add('hidden');
+        //initialMessage.classList.add('hidden');
+
         // We make a POST request to our API endpoint
         // Use method: 'POST' to send the availableSlots data
         // Set credentials: ''include' to send cookies
         // Set the Content-Type header to 'application/json'
         // We send the availableSlots data as the request body
+
+        slotsContainer.innerHTML = '';
         try {
             const response = await fetch('/api/appointment/slots', {
                 method: 'POST',
@@ -35,8 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // We parse the response
             const data = await response.json();
 
+            // Loading spinner and initial message are hidden when the response is recieved
+            loadingSpinner.classList.add('hidden');
+            initialMessage.classList.add('hidden');
+
             // If the response is ok, we display the message and render the slots
             // If the response status is 401, we display an error message
+            // Initial message and loading spinner are shown when the resposne is not ok
             if (response.ok) {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'green';
@@ -45,12 +58,17 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 showMessage.textContent = data.message;
                 showMessage.style.color = 'red';
+                initialMessage.classList.remove('hidden');
+                loadingSpinner.classList.remove('hidden');
             }
         // Catch any errors and display an error message
+        // We hide the loading spinner and initial message
         } catch (error) {
             console.error('Error occurred:', error);
             showMessage.textContent = 'Sorry something went wrong';
             showMessage.style.color = 'red';
+            loadingSpinner.classList.add('hidden');
+            initialMessage.classList.add('hidden');
         }
     });
 
