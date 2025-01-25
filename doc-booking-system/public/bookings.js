@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // If the response is ok, we display the message and redirect to user-appointment.html
             // If the response status is 401, we display an error message and redirect to home.html
-            // If the response status is 400, we display an error message and redirect to home.html
+            // If the response status is 400, we display an error message and redirect to user-appointment.html
             // If useer dont have an appointment, we display an error message and redirect to available-slots.html
             if (response.ok) {
                 showMessage.textContent = data.message;
