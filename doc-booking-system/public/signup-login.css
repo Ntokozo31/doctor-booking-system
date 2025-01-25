@@ -91,7 +91,7 @@ input {
 button[type="submit"] {
     width: 100%;
     padding: 0.75rem;
-    background-color: black;
+    background-color: #3b82f6;
     color: white;
     border: none;
     border-radius: 4px;
@@ -101,7 +101,21 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: grey;
+    background-color: #2563eb;
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.signupMessage {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 .hidden {
