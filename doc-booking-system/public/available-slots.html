@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Slots - DocBook</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
     <link rel="stylesheet" href="available-slots.css">
 </head>
 <body>
@@ -51,10 +56,15 @@
                 <input type="time" id="time" required>
             </div>
             <button type="submit">Search Slots</button>
+            <div id="showMessage" class="message"></div>
         </form>
-        <div id="showMessage" class="message"></div>
         <form id="slotsForm">
             <div id="slotsContainer"></div>
+                <h4 id="initialMessage">Search for slots above to see availability.</h4>
+                <div id="loading-spinner">
+                    <p>Loading....</p>
+                </div>
+            </div>
         </form>
     </main>
     <script src="available-slots.js"></script>
