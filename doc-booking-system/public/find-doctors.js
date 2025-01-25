@@ -64,15 +64,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const doctorElement = document.createElement('div');
             doctorElement.className = 'doctor';
             doctorElement.innerHTML = `
-                <p>Name: ${doctor.name}</p>
-                <p>Specialty: ${doctor.specialty}</p>
-                <p>Location: ${doctor.location}</p>
-                <p>experience: ${doctor.experience}</p>
-                <p>Availability:</p>
+                <h4>Name: ${doctor.name}</h4>
+                <h4>Specialty: ${doctor.specialty}</h4>
+                <h4>Location: ${doctor.location}</h4>
+                <h4>experience: ${doctor.experience}</h4>
+                <h4>Availability:</h4>
                 <ul>
-                    <li>Days: ${doctor.availability.days.join(', ')}</li>
-                    <li>Start Time: ${doctor.availability.startTime}</li>
-                    <li>End Time: ${doctor.availability.endTime}</li>
+                    <li><h4>Days: ${doctor.availability.days.join(', ')}</h4></li>
+                    <li><h4>Start Time: ${doctor.availability.startTime}</h4></li>
+                    <li><h4>End Time: ${doctor.availability.endTime}</h4></li>
                 </ul>
             `;
             // Append the doctorElement to the doctorsContainer
