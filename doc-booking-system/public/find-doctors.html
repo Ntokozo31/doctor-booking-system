@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Doctors - DocBook</title>
+    <link rel="stylesheet" href="find-doctors.css">
+</head>
+<body>
+    <header>
+        <h1><a href="home.html" class="app-name">DocBook</a></h1>
+        <nav>
+            <ul>
+                <li><a href="user-appointment.html">My Appointments</a></li>
+                <li><a href="available-slots.html">Available Slots</a></li>
+                <li><a href="find-doctors.html" class="active">Find Doctors</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Find Doctors by Location</h2>
+        <form id="doctorSearchForm">
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" required placeholder="e.g Cape Town">
+            </div>
+            <button type="submit">Search Doctors</button>
+            <div id="showMessage" class="message"></div>
+        </form>
+        <div id="doctorsContainer"></div>
+    </main>
+    <script src="find-doctors.js"></script>
+</body>
+</html>
