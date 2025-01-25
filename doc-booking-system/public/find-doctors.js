@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             doctorElement.className = 'doctor';
             doctorElement.innerHTML = `
                 <h4>Name: ${doctor.name}</h4>
-                <h4>Specialty: ${doctor.specialty}</h4>
+                <h4>Speciality: ${doctor.speciality}</h4>
                 <h4>Location: ${doctor.location}</h4>
                 <h4>experience: ${doctor.experience}</h4>
                 <h4>Availability:</h4>
