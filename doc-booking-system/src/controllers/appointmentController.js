@@ -228,8 +228,8 @@ const availableSlots = async (req, res) => {
     try {
         // Extract speciality, location, days in req.body
         // If one or more fields are empty we return a statusCode of 400
-        const { speciality, location, days } = req.body;
-        if (!speciality || !location || !days) {
+        const { speciality, location, days, time} = req.body;
+        if (!speciality || !location || !days || !time) {
             return res.status(400).json({ message: 'Sorry all fields are required'})
         }
 
