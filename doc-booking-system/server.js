@@ -4,28 +4,36 @@ const express = require('express');
 // Import connection to dabase
 const { connectToDb, getDb } = require('./src/config/db');
 
-//Import cors
-const cors = require('cors');
-
-// Import routes
-const authRouters = require('./src/routes/auth');
-
 // Import cookie parser
 const cookieParser = require('cookie-parser');
 
-// Initailize the app
+//Import cors
+//const cors = require('cors');
+
+// initialize the app
 const app = express();
+
+// Use cookie parser
+app.use(cookieParser());
+
+//const corsOptions = {
+    //origin: 'http://127.0.0.1:5500',
+    //credentials: true,
+//};
+
+// Import routes
+//const authRouters = require('./src/routes/auth');
 
 const path = require('path');
 
-// Cookie parser
-app.use(cookieParser());
 
 // Port setup
 const PORT = process.env.PORT || 3000;
 
 // Global cors
-app.use(cors());
+//app.use(cors());
+
+//app.use(cors(corsOptions));
 
 // Body parser for incoming requests
 app.use(express.json());
