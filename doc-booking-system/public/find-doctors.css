@@ -168,3 +168,10 @@ button:active {
     border-radius: 20px;
     background-color: white;
 }
+
+.message {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+}
