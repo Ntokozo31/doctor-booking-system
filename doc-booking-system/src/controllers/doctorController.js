@@ -20,18 +20,29 @@ const allDoctors = async (req, res) => {
     }
 }
 
-// Get doctor by name
-const doctorByName = async (req, res) => {
+// Get doctor by location
+const doctorByLocation = async (req, res) => {
     try {
-        // Retrieve doctor by name in our db
-        // Get more info about that particular doctor (name, location, availability...)
+        // Get location from the request body
+        // Retrieve doctor by location in our db
+        // Get more info about that particular doctor (name, location, availability...) we avoid getting the doctor id
         // If the doctor does not exist we return a statusCode 404
         // If it a server error we return statusCode of 500
+        const location = req.params.location;
+        if (!location) {
+            return res.status(400).json({ message: 'Please provide a location'});
+        }
         const db = getDb();
-        const docName = req.params.name;
-        const doctor = await db.collection('doctors').findOne({name: docName});
-        if (!doctor) {
-            return res.status(404).json({ message: 'This doctor cannot be found'});
+        const doctor = await db.collection('doctors').find(
+            { location: location},
+            {   
+                projection: {
+                    _id: 0,
+                }
+            }
+        ).toArray();
+        if (doctor.length === 0) {
+            return res.status(404).json({ message: 'No doctor found in this location'});
         }
         res.send(doctor);
     // If it a server error we return statusCode of 500
@@ -44,5 +55,5 @@ const doctorByName = async (req, res) => {
 // Export modules
 module.exports = {
     allDoctors,
-    doctorByName
+    doctorByLocation
 };
