@@ -151,3 +151,8 @@ footer {
     text-align: center;
     width: 100%;
 }
+
+.app-name {
+    color: white;
+    text-decoration: none;
+}
