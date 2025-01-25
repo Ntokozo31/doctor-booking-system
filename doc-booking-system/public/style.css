@@ -18,7 +18,6 @@ img {
     height: auto;
 }
 
-/* Navigation styles */
 nav {
     background-color: #3182CE;
     padding: 1rem 0;
@@ -26,7 +25,7 @@ nav {
     top: 0;
     z-index: 1000;
 }
-/* Responsive navigation */
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -88,8 +87,6 @@ nav {
 .nav-links a:hover {
     color: #FFC107;
 }
-
-/* Header styles */
 header {
     background-color: #EBF8FF;
     padding: 4rem 1rem;
@@ -114,6 +111,7 @@ header {
         margin-bottom: 0;
     }
 }
+
 h1 {
     font-size: 2.5rem;
     font-weight: bold;
@@ -156,7 +154,7 @@ h1 {
     background-color: #EBF8FF;
 }
 
-/* Search bar styles */
+
 .search-bar {
     margin-top: 2rem;
     display: flex;
@@ -183,7 +181,6 @@ h1 {
     background-color: #2C5282;
 }
 
-/* Why Choose Us section */
 .why-choose-us {
     padding: 4rem 1rem;
 }
@@ -237,7 +234,6 @@ h1 {
     font-size: 2rem;
 }
 
-/* How It Works section */
 .how-it-works {
     background-color: #F7FAFC;
     padding: 4rem 1rem;
@@ -267,7 +263,6 @@ h1 {
     color: #3182CE;
 }
 
-/* Popular Specialties section */
 .specialties {
     padding: 4rem 1rem;
 }
@@ -306,7 +301,6 @@ h1 {
     color: #3182CE;
 }
 
-/* Testimonials section */
 .testimonials {
     background-color: #F7FAFC;
     padding: 4rem 1rem;
@@ -331,7 +325,6 @@ h1 {
     margin-bottom: 1rem;
 }
 
-/* CTA section */
 .cta {
     background: linear-gradient(135deg, #3182CE, #2C5282);
     color: white;
@@ -346,7 +339,6 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Footer styles */
 footer {
     background: linear-gradient(to bottom right, #1A202C, #2D3748);
     color: #A0AEC0;
