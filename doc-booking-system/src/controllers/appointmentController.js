@@ -195,6 +195,5 @@ const availableSlots = async (req, res) => {
 module.exports = { 
     bookAppointment,
     allAppointment,
-    userCancelAppointment,
     availableSlots
 };
