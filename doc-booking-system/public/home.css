@@ -1,0 +1,153 @@
+body, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+nav {
+    background-color: #0044cc;
+    padding: 10px 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: center;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li {
+    margin-right: 0 15px;
+}
+
+nav ul li a:hover {
+    background-color: #0055ff;
+    border-radius: 5px;
+}
+
+.welcome {
+    text-align: center;
+    margin-top: 100px;
+    padding:20px
+}
+
+.welcome h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.welcome p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+nav .menu-icon {
+    display: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.welcome button {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: #0044cc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+}
+
+nav .app-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    background-color: #0044cc;
+    padding: 10px;
+    justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #0044cc;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .welcome h1 {
+        font-size: 28px;
+    }
+
+    .welcome p {
+        font-size: 16px;
+    }
+
+    nav .menu-icon {
+        display: block;
+        align-self: flex-end;
+        margin-right: 10px;
+    }
+
+    nav .app-name {
+        margin: 0;
+    }
+
+    nav ul.show {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul li a {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+    .welcome p {
+        font-size: 14px;
+    }
+}
