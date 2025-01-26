@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocBook - Auth</title>
+    <title>Doctor Booking - Auth</title>
     <link rel="stylesheet" href="signup-login.css">
 </head>
 <body>
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">DocBook</h2>
-            <p class="card-description">Sign up or login to  book your appointment</p>
+            <p class="card-description">Signup/login</p>
         </div>
         <div class="tabs">
             <div class="tab active" id="loginTab">Login</div>
@@ -20,7 +20,7 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="john@example.com" required>
+                    <input type="email" id="loginEmail" placeholder="example@example.com" required>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
@@ -29,16 +29,17 @@
                         <button type="button" class="password-toggle">👁️</button>
                     </div>
                 </div>
+                <div id="showMessage" class="message"></div>
                 <button type="submit">Log In</button>
             </form>
             <form id="signupForm" class="hidden">
                 <div class="form-group">
-                    <label for="signupName">Full Name</label>
+                    <label for="signupName">Username</label>
                     <input type="text" id="signupName" placeholder="John Doe" required>
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="john@example.com" required>
+                    <input type="email" id="signupEmail" placeholder="example@example.com" required>
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
@@ -47,11 +48,13 @@
                         <button type="button" class="password-toggle">👁️</button>
                     </div>
                 </div>
+                <div id="messageSignup" class="signupMessage"></div>
                 <button type="submit">Sign Up</button>
             </form>
-            <div id="showMessage"></div>
         </div>
     </div>
-    <script src="main.js"></script>
+    <script src="form_tabs.js"></script>
+    <script src="signup-login.js"></script>
+    <script src="signup_login-tabs.js"></script>
 </body>
 </html>
