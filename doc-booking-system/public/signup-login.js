@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // login the user
+    // login the user in our system
     // Get loginForm element and add an event listener to it
     document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault();
