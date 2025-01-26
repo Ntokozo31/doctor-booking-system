@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Scheduler</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="app-name">DocBook</div>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <ul class="nav-list">
+            <li><a href="user-appointment.html">My Appointments</a></li>
+            <li><a href="available-slots.html">Available Slots</a></li>
+            <li><a href="find-doctors.html">Find Doctor</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="welcome">
+        <h1>Your Journey to Wellness Starts Here</h1>
+        <p>Your convenience is our priority.<br>Book anytime anywhere</p>
+        <button class="button" onclick="window.location.href='bookings.html'">Book Appointment</button>
+        <button class="button" onclick="window.location.href='user-appointment.html'">View Appointments</button>
+    </div>
+    <script src="home.js"></script>
+</body>
+</html>
