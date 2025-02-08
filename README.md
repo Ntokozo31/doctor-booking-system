@@ -16,24 +16,28 @@ The Doctor Booking System API allows users to register, login, book appointments
   - [Doctor](#doctor)
 - [Running the Project](#running-the-project)
 - [License](#license)
+- [Contact](#Contact)
 
 ## Installation
 1. Clone the repository:
    ```sh
    git clone https://github.com/Ntokozo31/doctor-booking-system.git
 
-2.Navigate to the project directory
+2. ## Navigate to the project directory
 cd doctor-booking-system
 
-3.Install the dependencies:
+3. ## Install the dependencies:
 npm install
 
-Usage
+## Usage
+
 start the server
 npm start
 
-API Endpoints
-Auth
+## API Endpoints
+
+## Auth
+
 Register a new user
 POST /api/auth/register
 Parameters:
@@ -86,7 +90,7 @@ Responses:
 200 OK: Success message.
 400 Bad Request: Error message.
 
-Appointment
+## Appointment
 
 Create an appointment
 POST /api/appointment/create
@@ -121,7 +125,7 @@ Responses:
 200 OK: Success message and available slots details.
 400 Bad Request: Error message.
 
-Doctors
+## Doctors
 
 Get all doctors
 GET /api/doctor/all/docs
@@ -140,10 +144,20 @@ Responses:
 200 OK: List of doctors in the specified location.
 400 Bad Request: Error message.
 
-Running the project
+## Running the project
+
 to run the project, use the following commands:
 npm install
 npm start
 
-License
-This project is licensed under the MIT license
+## License
+
+This project is licensed under the MIT license - see the license file for details
+The MIT license was choosen because it is a permissive license that allows for broad use and distribution of software.
+
+## Contact
+I'm always open to discussing new ideas and collaborations.
+Feel free to get in touch!
+
+You can contact me via:
+* Email: dubentokozo45@yahoo.com
