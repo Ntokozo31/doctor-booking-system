@@ -13,8 +13,7 @@ const uri = process.env.MONGO_URI;
 // Connect to mongoDB
 module.exports = {
     connectToDb: (callback) => {
-        const uriWithReplicaSet = `${uri}?replicaSet=rs0&retryWrites=true&w=majority`;
-        MongoClient.connect(uriWithReplicaSet)
+        MongoClient.connect(uri)
             .then((client) => {
                 dbConnection = client.db()
                 return callback();
