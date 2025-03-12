@@ -13,6 +13,9 @@ require('dotenv').config();
 // Intialize JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// Import sendConfirmationEmail from mail.js
+const sendConfirmationEmail = require('../../mail');
+
 // book appointment with doctor
 const bookAppointment = async (req, res) => {
     try {
@@ -87,6 +90,18 @@ const bookAppointment = async (req, res) => {
         // We insert the appointment in our database
         // We return a statusCode of 201 if the appointment is successfully created
         await db.collection('appointments').insertOne(docBook)
+
+        // Send confirmation email to user
+        await sendConfirmationEmail(user.name, user.email,
+            `Doctor: ${doctor.name},
+            Location: ${location},
+            Date: ${days},
+            Time: ${time},
+            Status: booked`
+        );
+
+        // We return a statusCode of 201 if the appointment is successfully created
+        // We return the appointment details to the user
         res.status(201).json({ message: 'Successfully Booked. Please wait a moment while we show your bookings', Details: {
             doctorName: docBook.doctorName,
             location: docBook.location,
