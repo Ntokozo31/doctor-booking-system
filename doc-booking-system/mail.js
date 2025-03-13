@@ -27,8 +27,8 @@ async function sendConfirmationEmail({userName, userEmail, doctor, days, time}) 
         console.log('Email sent successfully', data);
         return {Success: true, data};
     } catch (error) {
-        console.error('An error occurred', err);
-        return {Success: false, error: err};
+        console.error('An error occurred', error);
+        return {Success: false, error};
     }
 }
 
