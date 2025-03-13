@@ -92,7 +92,13 @@ const bookAppointment = async (req, res) => {
         await db.collection('appointments').insertOne(docBook)
 
         // Send confirmation email to user
-        const emailResponse = await sendConfirmationEmail(user.name, user.email, doctor.name, days, time);
+        const emailResponse = await sendConfirmationEmail({
+            userName: user.name,
+            userEmail: user.email,
+            doctor: doctor.name,
+            days: days,
+            time: time
+        });
 
         // If email failed to send we return a statusCode of 201
         if (!emailResponse.success) {
