@@ -1,47 +1,33 @@
-// Initiate nodemailer to send email to user
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// We require nodemailer
 require('dotenv').config();
 
-// We get the mailtrap password from the .env file
-const MAILTRAP_PASSWORD = process.env.MAILTRAP_PASSWORD;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// We get the mailtrap username from the .env file
-const MAILTRAP_USERNAME = process.env.MAILTRAP_USERNAME;
-
-// We create a transporter to send email, with host, port and auth
-const transporter = nodemailer.createTransport({
-    host: "live.smtp.mailtrap.io",
-    port: 587,
-    auth: {
-        user: MAILTRAP_USERNAME,
-        password: MAILTRAP_PASSWORD
-    }
-});
-
-// Function to send confirmation email to user
-// We pass in the userName, userEmail and appointmentDetails
-// We create a mailOptions object with from, to, subject, text and html
-const sendConfirmationEmail = async (userName, userEmail, appointmentDetails) => {
-    const mailOptions = {
-        from: '"Doctor Booking System" docbook77@gmail.com',
-        to: userEmail,
-        subject: 'Appointment Confirmation',
-        text: `Hello ${userName}, your appointment has been booked successfully. Your appointment details are: ${appointmentDetails}`,
-        html: `<p>Hellow <strong>${userName}</strong>,</p><p>Your appointment has been confirmed for ${appointmentDetails}</p>`
-    };
-
+async function sendConfirmationEmail({userName, userEmail, doctor, days, time}) {
     try {
-        // Send email to user
-        // We await the transporter to send the mail
-        // If the mail is sent we console log the message id
-        // If there is an error we console log the error
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Message sent: ', info.messageId);
+        const {data, error} = await resend.emails.send({
+            from: 'DoBook <onboarding@resend.dev>',
+            to: userEmail,
+            subject: 'Appointment Confirmation',
+            html: `
+                <p>Hi <strong>${userName}</strong>,</p>
+                <p>Your appointment with Dr. <strong>${doctor}</strong> has been confirmed for ${days} at ${time}.</p>
+                <p>Thank you for booking with us.</p>
+            `
+        });
+
+        if (error) {
+            console.error('Email failed to send', error);
+            return {Success: false, error};
+        }
+
+        console.log('Email sent successfully', data);
+        return {Success: true, data};
     } catch (error) {
-        console.error('Error sending mail:', error);
+        console.error('An error occurred', err);
+        return {Success: false, error: err};
     }
 }
 
-module.exports = sendConfirmationEmail;
+module.exports = { sendConfirmationEmail };

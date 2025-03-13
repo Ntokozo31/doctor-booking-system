@@ -92,17 +92,17 @@ const bookAppointment = async (req, res) => {
         await db.collection('appointments').insertOne(docBook)
 
         // Send confirmation email to user
-        await sendConfirmationEmail(user.name, user.email,
-            `Doctor: ${doctor.name},
-            Location: ${location},
-            Date: ${days},
-            Time: ${time},
-            Status: booked`
-        );
+        const emailResponse = await sendConfirmationEmail(user.name, user.email, doctor.name, days, time);
+
+        // If email failed to send we return a statusCode of 201
+        if (!emailResponse.success) {
+            console.warn('Booking successful but email failed to send');
+            return res.status(200).json({ message: 'Booking successful but email failed to send'});
+        }
 
         // We return a statusCode of 201 if the appointment is successfully created
         // We return the appointment details to the user
-        res.status(201).json({ message: 'Successfully Booked. Please wait a moment while we show your bookings', Details: {
+        res.status(200).json({ message: 'Successfully Booked. Please wait a moment while we show your bookings', Details: {
             doctorName: docBook.doctorName,
             location: docBook.location,
             days: docBook.days,
