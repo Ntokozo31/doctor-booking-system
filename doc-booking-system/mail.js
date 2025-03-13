@@ -2,7 +2,9 @@ const { Resend } = require('resend');
 
 require('dotenv').config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+const resend = new Resend(RESEND_API_KEY);
 
 async function sendConfirmationEmail({userName, userEmail, doctor, days, time}) {
     try {
