@@ -38,117 +38,120 @@ npm start
 
 ## Auth
 
-Register a new user
-POST /api/auth/register
+### Register a new user
+**POST /api/auth/register**
+
+**Parameters:**
+- `username` (String): User's username.
+- `email` (String): User's email.
+- `password` (String): User's password.
+
+**Responses:**
+- `200 OK`: Success message.
+- `400 Bad Request`: Error message.
+
+## Login a user
+**POST /api/auth/login**
+
+**Parameters:**
+- `email` (String): User's email.
+- `password` (String): User's password.
+
+Responses:
+- `200 OK`: Success message.
+- `400 Bad Request`: Error message.
+
+### Logout a user
+**POST /api/auth/logout**
+
+Responses:
+- `200 OK`: Success message.
+- `400 Bad Request`: Error message.
+
+### Get user profile
+***GET /api/auth/profile**
+
+**Response**
+- `200 OK`: Sucess message
+- `400 Bad Request`: Error message
+
+### Update user profile
+**PUT /api/auth/profile/update**
+
 Parameters:
+- `username` (String): User's username.
+- `email` (String): User's email.
 
-username (String): User's username.
-email (String): User's email.
-password (String): User's password.
+**Responses:**
+- `200 OK`: Success message.
+- `400 Bad Request`: Error message.
+
+### Delete user profile
+**DELETE /api/auth/profile/delete**
+
 Responses:
-
-200 OK: Success message.
-400 Bad Request: Error message.
-
-Login a user
-POST /api/auth/login
-Parameters:
-
-email (String): User's email.
-password (String): User's password.
-Responses:
-
-200 OK: Success message.
-400 Bad Request: Error message.
-
-Logout a user
-POST /api/auth/logout
-Responses:
-
-200 OK: Success message.
-400 Bad Request: Error message.
-
-Get user profile
-GET /api/auth/profile
-GET /api/auth/profile
-
-Update user profile
-PUT /api/auth/profile/update
-Parameters:
-
-username (String): User's username.
-email (String): User's email.
-Responses:
-
-200 OK: Success message.
-400 Bad Request: Error message.
-
-Delete user profile
-DELETE /api/auth/profile/delete
-Responses:
-
-200 OK: Success message.
-400 Bad Request: Error message.
+- `200 OK`: Success message.
+- `400 Bad Request`: Error message.
 
 ## Appointment
 
-Create an appointment
-POST /api/appointment/create
+### Create an appointment
+**POST /api/appointment/create**
+
 Parameters:
+- `speciality` (String): Doctor's speciality.
+- `location` (String): Appointment location.
+- `days` (String): Appointment days.
+- `time` (String): Appointment time.
 
-speciality (String): Doctor's speciality.
-location (String): Appointment location.
-days (String): Appointment days.
-time (String): Appointment time.
 Responses:
+- `200 OK`: Success message and appointment details. An email notification will be sent to the user upon successful booking which will include full appointment detaials.
+- `400 Bad Request`: Error message.
 
-200 OK: Success message and appointment details.
-400 Bad Request: Error message.
+### Get all appointments for the user
+**GET /api/appointment/all**
 
-Get all appointments for the user
-GET /api/appointment/all
 Responses:
+- `200 OK`: List of appointments.
+- `400 Bad Request`: Error message.
 
-200 OK: List of appointments.
-400 Bad Request: Error message.
+### Check available slots
+**POST /api/appointment/slots**
 
-Check available slots
-POST /api/appointment/slots
-Parameters:
+**Parameters:**
+- `speciality` (String): Doctor's speciality.
+- `location` (String): Appointment location.
+-`days` (String): Appointment days.
+-`time` (String): Appointment time.
 
-speciality (String): Doctor's speciality.
-location (String): Appointment location.
-days (String): Appointment days.
-time (String): Appointment time.
-Responses:
-
-200 OK: Success message and available slots details.
-400 Bad Request: Error message.
+**Responses:**
+- `200 OK`: Success message and available slots details.
+- `400 Bad Request`: Error message.
 
 ## Doctors
 
-Get all doctors
-GET /api/doctor/all/docs
+### Get all doctors
+**GET /api/doctor/all/docs**
+
 Responses:
+- `200 OK`: List of doctors.
+- `400 Bad Request`: Error message.
 
-200 OK: List of doctors.
-400 Bad Request: Error message.
+### Get doctors by location
+**GET /api/doctor/doc/:location**
 
-Get doctors by location
-GET /api/doctor/doc/:location
-Parameters:
+**Parameters:**
+- `location` (String): Doctor's location.
 
-location (String): Doctor's location.
-Responses:
-
-200 OK: List of doctors in the specified location.
-400 Bad Request: Error message.
+**Responses:**
+- `200 OK`: List of doctors in the specified location.
+- `400 Bad Request`: Error message.
 
 ## Running the project
 
 to run the project, use the following commands:
-npm install
-npm start
+### npm install
+### npm start
 
 ## License
 
