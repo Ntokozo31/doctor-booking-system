@@ -65,7 +65,7 @@ const register = async (req, res) => {
         // StatusCode of 201 after storing the token in a cookie, then user will be registed
         res.cookie('token', userToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'Strict',
             maxAge: 60 * 60 * 1000
         })
@@ -124,7 +124,7 @@ const userLogin = async (req, res) => {
         // StatusCode of 200 after storing the token in a cookie, then user will be logged in 
         res.cookie('token', userToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'Strict',
             maxAge: 60 * 60 * 1000
         })
