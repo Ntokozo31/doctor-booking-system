@@ -81,7 +81,7 @@ const sendConfirmationEmail = async ({ userEmail, location, doctor, days, time }
         // The email is sent to the user's email address
         const sendSmtpEmail = {
             to: [{ email: userEmail }],
-            sender: { name: 'DocBook Team', email: 'docbook77@gmail.com' },
+            sender: { name: 'DocBook Team', email: 'docbook77@ntokozo.tech' },
             subject: 'Appointment Confirmation',
             htmlContent: htmlContent
         };
