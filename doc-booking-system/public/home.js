@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // Get query selector for nav-list
 // Toggle the class show on nav-list
 function toggleMenu() {
-    const navLinks = document.querySelector('.nav-list');
-    navLinks.classList.toggle('show');
+    const navList = document.getElementById("navList");
+    navList.classList.toggle("show");
 }
+
+document.getElementById('currentYear').textContent = new Date().getFullYear();
