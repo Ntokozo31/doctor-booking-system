@@ -2,15 +2,29 @@
 // We register the user
 // Use DOMContentloaded event to make sure the DOM is fully loaded before we start using the DOM
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Show the signup form when the user clicks on the signup button
+    // Hide the login form when the user clicks on the signup button
+    document.getElementById('show-signup').addEventListener('click', function() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('signup-form').style.display = 'block';
+    });
+
+    // Show the login form when the user clicks on the login button
+    // Hide the signup form when the user clicks on the login button
+    document.getElementById('show-login').addEventListener('click', function() {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
+    });
     // Get signupForm element and add an event listener to it
-    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+    document.getElementById('signup').addEventListener('submit', async (event) => {
         event.preventDefault();
 
         // Get user data username, email and password and assign it to userData
         const userData = {
-            username: document.getElementById('signupName').value,
-            email: document.getElementById('signupEmail').value,
-            password: document.getElementById('signupPassword').value,
+            username: document.getElementById('signup-username').value,
+            email: document.getElementById('signup-email').value,
+            password: document.getElementById('signup-password').value,
             messageSignup: document.getElementById('messageSignup').value,
             message: document.getElementById('showMessage').value,
         };
@@ -59,12 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // login the user in our system
     // Get loginForm element and add an event listener to it
-    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    document.getElementById('login').addEventListener('submit', async (event) => {
         event.preventDefault();
         // Get user data email and password and assign it to loginUser
         const loginUser = {
-            email: document.getElementById('loginEmail').value,
-            password: document.getElementById('loginPassword').value,
+            email: document.getElementById('login-mail').value,
+            password: document.getElementById('login-password').value,
             message: document.getElementById('showMessage').value
         }
 
