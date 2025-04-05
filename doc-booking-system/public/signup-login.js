@@ -25,9 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
             username: document.getElementById('signup-username').value,
             email: document.getElementById('signup-email').value,
             password: document.getElementById('signup-password').value,
-            messageSignup: document.getElementById('messageSignup').value,
-            message: document.getElementById('showMessage').value,
         };
+
+        // Get messageSignup element
+        const messageSignup = document.getElementById('messageSignup');
 
         try {
         // Fetch request to register the user
@@ -83,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('login-mail').value,
             password: document.getElementById('login-password').value,
             message: document.getElementById('showMessage').value
-        }
+        };
+
+        // Get showMessage element
+        const showMessage = document.getElementById('showMessage');
 
         try {
             // Fetch request to login the user
