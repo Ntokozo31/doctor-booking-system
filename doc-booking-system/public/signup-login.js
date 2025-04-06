@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         // Get user data email and password and assign it to loginUser
         const loginUser = {
-            email: document.getElementById('login-mail').value,
+            email: document.getElementById('login-email').value,
             password: document.getElementById('login-password').value,
             message: document.getElementById('showMessage').value
         };
