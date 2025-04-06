@@ -70,9 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             messageSignup.textContent = 'Sorry something went wrong';
             messageSignup.style.color = 'red';
         }
-
-            document.getElementById('signup-form').style.display = 'none';
-            document.getElementById('login-form').style.display = 'block';
     });
 
     // login the user in our system
