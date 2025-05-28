@@ -5,9 +5,9 @@ const express = require('express');
 const router = express.Router();
 
 // Import database
-const { getDb } = require('../config/db');
+//const { getDb } = require('../config/db');
 
-// Import allDocotors
+// Import doctor controller
 const { allDoctors, doctorByLocation } = require('../controllers/doctorController');
 
 // Get all doctors
