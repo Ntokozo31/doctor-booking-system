@@ -128,11 +128,6 @@ const allAppointment = async (req, res) => {
                 status:1}})
                 .toArray();
 
-        // If no appointment is found we return a statusCode of 404
-        // If appointment is found we return the appointment to the user in an array
-        if (userAppointment.length === 0) {
-            return res.status(404).json({ message: 'Sorry you dont have any appointment!'})
-        }
         res.status(200).json(userAppointment)
     // We catch an error if its related to our server error
     } catch (err) {
