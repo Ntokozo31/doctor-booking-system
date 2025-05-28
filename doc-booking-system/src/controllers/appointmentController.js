@@ -19,21 +19,10 @@ const sendConfirmationEmail = require('../../mail');
 // book appointment with doctor
 const bookAppointment = async (req, res) => {
     try {
-        // Extract token from cookie
-        // If no token is found we return a statusCode of 401
-        const tokenUser = req.cookies.token
-        if (!tokenUser) {
-            return res.status(401).json({ message: 'Sorry no token provided, Please try to login again'})
-        }
-        //We decode the token to get userId
-        //Sve userId in a variable called userId after it has been extracted
-        const decode = jwt.verify(tokenUser, JWT_SECRET)
-        const userId = decode.userId
-
         // Extract speciality, location, days and time in req.body
         // If one or more fields are empty we return a statusCode of 400
         const { speciality, location, days, time } = req.body;
-        if (!userId || !speciality || !location || !days || !time) {
+        if (!req.userId || !speciality || !location || !days || !time) {
             return res.status(400).json({ message: 'Sorry all this field are required'})
         }
 
@@ -42,13 +31,13 @@ const bookAppointment = async (req, res) => {
 
         // We validate userId
         // If userId is not valid we return a statusCode of 400
-        if (!ObjectId.isValid(userId)) {
+        if (!ObjectId.isValid(req.userId)) {
             return res.status(400).json({ message: 'Sorry invalid user id'})
         }
         
         // We find user in our database
         // If user is not found we return a statusCode of 400
-        const user = await db.collection('users').findOne({_id: new ObjectId(userId)})
+        const user = await db.collection('users').findOne({_id: new ObjectId(req.userId)})
         if (!user) {
             return res.status(400).json({ message: 'Sorry user does not exist'})
         }
@@ -70,14 +59,14 @@ const bookAppointment = async (req, res) => {
         // We check if user already have a pending appointment
         // If user already have a pedding appointment we return a statusCode of 400
         const alreadyBooked = await db.collection('appointments').findOne({
-            userId: new ObjectId(userId),
+            userId: new ObjectId(req.userId),
             status: 'booked' });
         if (alreadyBooked) {
             return res.status(400).json({ message: 'Sorry you already have a pedding appointment to attend' })
         }
         // We create new appointment for user and store it in our Database
         const docBook = {
-            userId: new ObjectId(userId),
+            userId: new ObjectId(req.userId),
             doctorId: doctor._id,
             doctorName: doctor.name,
             location,
@@ -101,12 +90,6 @@ const bookAppointment = async (req, res) => {
             time: time
         });
 
-        // If email failed to send we return a statusCode of 201
-        //if (!emailResponse.success) {
-            //console.warn('Booking successful but email failed to send');
-            //return res.status(200).json({ message: 'Booking successful but email failed to send'});
-        //}
-
         // We return a statusCode of 201 if the appointment is successfully created
         // We return the appointment details to the user
         res.status(200).json({ message: 'Successfully Booked. Please wait a moment while we show your bookings', Details: {
@@ -128,25 +111,12 @@ const bookAppointment = async (req, res) => {
 // Get user appointment
 const allAppointment = async (req, res) => {
     try {
-        // We get token from cookie
-        const tokenUser = req.cookies.token
-
-        // If no token is found we return a statusCode of 401
-        if (!tokenUser) {
-            return res.status(401).json({ message: 'No token provided, Please try to login and try again'})
-        }
-
-        // We decode the token to extract userId
-        // Save userId in a variable called userId after it has been extracted
-        const decode = jwt.verify(tokenUser, JWT_SECRET);
-        const userIdFromToken = decode.userId
-
         // Initailize db
         // Conver userId to objectId
         // We find all appointment for user in our database
         // We extract only doctorName, location, speciality, days, time and status
         const db = getDb();
-        const objectId = new ObjectId(userIdFromToken)
+        const objectId = new ObjectId(req.userId)
         const userAppointment = await db.collection('appointments').find({ userId: objectId },
             {projection: {
                 _id: 0,
