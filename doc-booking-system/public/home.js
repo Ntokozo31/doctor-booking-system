@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // If the response is ok we redirect the user to the login page
             // If not we log the error
+            // If the response is ok we redirect the user to the index page
             if (response.ok) {
                 window.location.href = 'index.html';
             } else {
@@ -43,5 +44,3 @@ function toggleMenu() {
     const navList = document.getElementById("navList");
     navList.classList.toggle("show");
 }
-
-document.getElementById('currentYear').textContent = new Date().getFullYear();
