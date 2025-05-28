@@ -164,3 +164,8 @@ button:active {
 #deleteProfileBtn:hover {
     background-color: #b71c1c;
 }
+
+.app-name {
+    color: #fff;
+    text-decoration: none;
+}
