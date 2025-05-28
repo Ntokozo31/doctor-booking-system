@@ -15,7 +15,8 @@ const { ObjectId } = require('mongodb');
 // Import JWT_SECRET
 require('dotenv').config();
 
-// Register user and save to database
+// User registration
+// This function will be used to register user
 const register = async (req, res) => {
     try {
         // Extract username, email and password
@@ -140,29 +141,11 @@ const userLogin = async (req, res) => {
 // Get user profile
 const myProfile = async (req, res) => {
     try {
-        // We get token from cookie
-        const tokenUser = req.cookies.token
-
-        // We check if the requested profile id matches the logged in user id
-        // If the id does not match we return a statusCode of 403
-        if (req.params.id !== req.userId) {
-            return res.status(403).json( { message: 'Forbidden please view your own profile'});
-        }
-        // If no token is found we return a message with statusCode of 401
-        if (!tokenUser) {
-            return res.status(401).json({ message: 'Sorry no token provided, Please login and try again' });
-        }
-
-        // We decode the token to extract userId
-        // Save userId in a variable called userId after it has be extracted
-        const decode = jwt.verify(tokenUser, JWT_SECRET);
-        const userId = decode.userId;
-
         //Initialize db
         const db = getDb();
 
         // Covert userId to objectId
-        const objectId = new ObjectId(userId)
+        const objectId = new ObjectId(req.userId)
 
         // Find user in databse
         // Extract only username, email and createdAt from the db
@@ -188,19 +171,6 @@ const myProfile = async (req, res) => {
 // update user profile
 const updateUserProfile = async (req, res) => {
     try {
-
-        // We get token from cookie
-        // If no token is found we return a message with statusCode of 401
-        const tokenUser = req.cookies.token;
-        if (!tokenUser) {
-            return res.status(401).json({ message: 'Sorry no token provided, Please login and try again'})
-        }
-
-        // W decode the token to extract userId
-        // Save userId in a variable called userId after it has be extracted
-        const decode = jwt.verify(tokenUser, JWT_SECRET);
-        const userId = decode.userId;
-
         // Extract username and email from req.body
         const { username, email } = req.body;
 
@@ -218,7 +188,9 @@ const updateUserProfile = async (req, res) => {
 
         // Initialize db
         const db = getDb();
-        const objectId = new ObjectId(userId)
+
+        // Convert userId to objectId
+        const objectId = new ObjectId(req.userId)
 
         // Update the user profile
         // If the user is found we update the user profile
@@ -239,28 +211,17 @@ const updateUserProfile = async (req, res) => {
 // Delete user profile
 const deleteUserProfile = async (req, res) => {
     try {
-        // Extract token from cookie
-        // If no token is found we return a message with statusCode of 404
-        const tokenUser = req.cookies.token
-        if (!tokenUser) {
-            return res.status(404).json({ message: 'No token provided, Please login and try again'});
-        }
-
-        // We decode the token to extract userId
-        // Save userId in a variable called userId after it has be extracted
-        const decode = jwt.verify(tokenUser, JWT_SECRET);
-        const userIdFromToken = decode.userId;
-
         // Initialize db
-        // Convert userId to objectId
         const db = getDb();
-        const objectId = new ObjectId(userIdFromToken);
+
+        // Convert userId to objectId
+        const objectId = new ObjectId(req.userId);
 
         // Delete user profile
         // If the user is found we delete the user profile
         // If the user is not found we return a statusCode of 404
         const deleteUser = await db.collection('users').deleteOne({ _id: objectId});
-        if (deleteUser.length === 0) {
+        if (deleteUser.deletedCount === 0) {
             return res.status(404).json({ message: 'Sorry we were unable to delete your profile'})
         }
         // If the user is deleted we return a statusCode of 200
