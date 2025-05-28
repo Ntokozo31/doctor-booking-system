@@ -26,6 +26,13 @@ nav {
     z-index: 1000;
 }
 
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -56,41 +63,68 @@ nav {
     margin: 10px 0;
     }
 
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 .logo {
-    display: flex;
-    align-items: center;
-    color: white;
+    color: #fff;
+    text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
-    text-decoration: none;
-}
-.logo i {
-    margin-right: 0.5rem;
-}
-.nav-links {
     display: flex;
-    list-style: none;
+    align-items: center;
 }
-.nav-links li {
-    margin-left: 1.5rem;
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
 }
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s;
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 25px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: 0.3s;
 }
-.nav-links a:hover {
-    color: #FFC107;
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #fff;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .nav-links a {
+        color: #222 !important;
+    }
+    .hamburger {
+        display: flex;
+    }
+    .nav-container {
+        position: relative;
+    }
 }
-header {
-    background-color: #EBF8FF;
-    padding: 4rem 1rem;
+
+.hamburger.active span {
+    background: #222;
 }
+
 .header-content {
     display: flex;
     flex-direction: column;
@@ -397,47 +431,4 @@ footer {
 }
 .social-links a:hover {
     color: #63B3ED;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-}
-.hamburger span {
-    display: block;
-    height: 3px;
-    width: 25px;
-    background: #fff;
-    margin: 4px 0;
-    border-radius: 2px;
-    transition: 0.3s;
-}
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        background: #222;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 200px;
-        padding: 1rem;
-        z-index: 1000;
-    }
-    .nav-links.active {
-        display: flex;
-    }
-    .hamburger {
-        display: flex;
-    }
-    .nav-container {
-        position: relative;
-    }
 }

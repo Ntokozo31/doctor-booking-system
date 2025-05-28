@@ -1,4 +1,3 @@
-
 // We register the user
 // Use DOMContentloaded event to make sure the DOM is fully loaded before we start using the DOM
 document.addEventListener('DOMContentLoaded', () => {
@@ -127,4 +126,5 @@ const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
     hamburgerBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        hamburgerBtn.classList.toggle('active'); // Toggle color of hamburger bars
     });
