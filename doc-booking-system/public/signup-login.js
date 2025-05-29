@@ -1,130 +1,255 @@
-// We register the user
-// Use DOMContentloaded event to make sure the DOM is fully loaded before we start using the DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Enhanced JavaScript with modern features
+class DocBookApp {
+    constructor() {
+        this.init();
+    }
 
-    // Show the signup form when the user clicks on the signup button
-    // Hide the login form when the user clicks on the signup button
-    document.getElementById('show-signup').addEventListener('click', function() {
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('signup-form').style.display = 'block';
-    });
+    init() {
+        this.setupNavigation();
+        this.setupModal();
+        this.setupAuth();
+        this.setupScrollEffects();
+        this.setupAnimations();
+    }
 
-    // Show the login form when the user clicks on the login button
-    // Hide the signup form when the user clicks on the login button
-    document.getElementById('show-login').addEventListener('click', function() {
-        document.getElementById('signup-form').style.display = 'none';
-        document.getElementById('login-form').style.display = 'block';
-    });
-    // Get signupForm element and add an event listener to it
-    document.getElementById('signup').addEventListener('submit', async (event) => {
-        event.preventDefault();
+    setupNavigation() {
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        const navbar = document.getElementById('navbar');
 
-        // Get user data username, email and password and assign it to userData
-        const userData = {
-            username: document.getElementById('signup-username').value,
-            email: document.getElementById('signup-email').value,
-            password: document.getElementById('signup-password').value,
-        };
+        // Mobile menu toggle
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
 
-        // Get messageSignup element
-        const messageSignup = document.getElementById('messageSignup');
-
-        try {
-        // Fetch request to register the user
-        // We send the userData to the server
-        // If the response is ok we display a succes message
-            const response = await fetch('/api/auth/register', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            });
-
-            // We get the response data
-            const data = await response.json();
-            // If the response is ok we display a green success message
-            // If the response did not succeed we display a red message related to that error
-            // We setTimeout to redirect the user to the home page after 2 seconds
-            if (response.ok) {
-                messageSignup.textContent = data.message;
-                messageSignup.style.color = 'green';
-                localStorage.setItem('token', data.userToken);
-                setTimeout(function() {
-                    window.location.href = 'home.html';
-                }, 2000);
-            } else if (response.status === 400) {
-                messageSignup.textContent = data.message;
-                messageSignup.style.color = 'red';
-            } else if (response.status === 422) {
-                messageSignup.textContent = data.message;
-                showMessage.style.color = 'red';
-            } else {
-                messageSignup.textContent = data.message;
-                messageSignup.style.color = 'red';
+        // Close mobile menu when clicking on links
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && !e.target.classList.contains('btn')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             }
-        // If there is an internal error we catch it and display a red message
-        } catch (error) {
-            messageSignup.textContent = 'Sorry something went wrong';
-            messageSignup.style.color = 'red';
-        }
-    });
+        });
 
-    // login the user in our system
-    // Get loginForm element and add an event listener to it
-    document.getElementById('login').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        // Get user data email and password and assign it to loginUser
-        const loginUser = {
-            email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value,
-            message: document.getElementById('showMessage').value
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    setupModal() {
+        const modal = document.getElementById('auth-modal');
+        const authBtns = document.querySelectorAll('#auth-btn, #book-appointment, #cta-book');
+        const closeBtn = document.getElementById('modal-close');
+
+        // Open modal
+        authBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         };
 
-        // Get showMessage element
-        const showMessage = document.getElementById('showMessage');
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
+    setupAuth() {
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const showSignupBtn = document.getElementById('show-signup');
+        const showLoginBtn = document.getElementById('show-login');
+
+        // Form switching
+        showSignupBtn.addEventListener('click', () => {
+            loginForm.classList.remove('active');
+            signupForm.classList.add('active');
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            signupForm.classList.remove('active');
+            loginForm.classList.add('active');
+        });
+
+        // Login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await this.handleLogin(e);
+        });
+
+        // Signup form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await this.handleSignup(e);
+        });
+    }
+
+    async handleLogin(event) {
+        const formData = new FormData(event.target);
+        const loginData = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+
+        const messageEl = document.getElementById('login-message');
+        
         try {
-            // Fetch request to login the user
+            // Simulate API call
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify(loginUser),
-            })
-            // We get the response data
+                body: JSON.stringify(loginData)
+            });
+
             const data = await response.json();
 
-            // If the response is ok we display a green success message and log the user in
-            // If the response did not succeed we display a red message related to that error
             if (response.ok) {
-                showMessage.textContent = data.message;
-                showMessage.style.color = 'green';
-                //localStorage.setItem('token', data.userToken);
-                setTimeout(function () {
+                this.showMessage(messageEl, data.message || 'Login successful!', 'success');
+                // Store token if provided
+                if (data.userToken) {
+                    localStorage.setItem('token', data.userToken);
+                }
+                setTimeout(() => {
                     window.location.href = 'home.html';
                 }, 2000);
-            } else if (response.status === 404) {
-                showMessage.textContent = data.message;
-                showMessage.style.color = 'red';
             } else {
-                showMessage.textContent = data.message
-                showMessage.style.color = 'red'
+                this.showMessage(messageEl, data.message || 'Login failed', 'error');
             }
-            // If there is an internal error we catch it and display a red message
         } catch (error) {
-            showMessage.textContent = 'Sorry something went wrong';
-            showMessage.style.color = 'red';
+            console.error('Login error:', error);
+            this.showMessage(messageEl, 'Sorry, something went wrong. Please try again.', 'error');
         }
-    });
+    }
+
+    async handleSignup(event) {
+        const formData = new FormData(event.target);
+        const signupData = {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+
+        const messageEl = document.getElementById('signup-message');
+
+        try {
+            // Simulate API call
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signupData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                this.showMessage(messageEl, data.message || 'Account created successfully!', 'success');
+                // Store token if provided
+                if (data.userToken) {
+                    localStorage.setItem('token', data.userToken);
+                }
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 2000);
+            } else {
+                this.showMessage(messageEl, data.message || 'Registration failed', 'error');
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+            this.showMessage(messageEl, 'Sorry, something went wrong. Please try again.', 'error');
+        }
+    }
+
+    showMessage(element, message, type) {
+        element.innerHTML = `<div class="message ${type}">${message}</div>`;
+        setTimeout(() => {
+            element.innerHTML = '';
+        }, 5000);
+    }
+
+    setupScrollEffects() {
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.feature-card, .step, .specialty-card, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    }
+
+    setupAnimations() {
+        // Add stagger animation to cards
+        const animateCards = (selector, delay = 100) => {
+            document.querySelectorAll(selector).forEach((card, index) => {
+                card.style.animationDelay = `${index * delay}ms`;
+            });
+        };
+
+        animateCards('.feature-card');
+        animateCards('.specialty-card', 50);
+        animateCards('.testimonial-card', 150);
+    }
+}
+
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new DocBookApp();
 });
 
-const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navLinks = document.querySelector('.nav-links');
-    hamburgerBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburgerBtn.classList.toggle('active'); // Toggle color of hamburger bars
-    });
+// Add loading animation
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
