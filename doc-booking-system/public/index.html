@@ -3,114 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocBook - Doctor Booking System</title>
+    <title>DocBook - Modern Healthcare Booking</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-stethoscope"></i>
-                DocBook
-            </a>
-            <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#why-choose-us">Why Choose Us</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#specialties">Specialties</a></li>
-                <li><a href="signup-login.html">Signup/Login</a></li>
-            </ul>
-        </div>
-    </nav>
-    <header id="home">
+    <!-- Navigation -->
+    <nav id="navbar">
         <div class="container">
-            <div class="header-content">
-                <div class="header-text">
-                    <h1>Doctors Who Care About Your Health</h1>
-                    <p>Book appointments with the best doctors near you.</p>
-                    <div style="margin-top: 2rem;">
-                        <a href="signup-login.html" class="btn btn-primary">Book Appointment</a>
-                    </div>
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-stethoscope"></i>
+                    DocBook
+                </a>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#specialties">Specialties</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#" class="btn btn-primary" id="auth-btn">Get Started</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </div>
-    </header>
-    <section id="why-choose-us" class="why-choose-us">
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
         <div class="container">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Why Choose Us</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">Experience healthcare excellence with our comprehensive medical services and expert doctors</p>
-            <div class="features">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Healthcare Made Simple & Accessible</h1>
+                    <p>Connect with top-rated doctors, book appointments instantly, and get the care you deserve. Your health journey starts here.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary" id="book-appointment">Book Appointment</a>
+                        <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/placeholder.svg?height=500&width=600" alt="Modern Healthcare" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose DocBook?</h2>
+                <p>Experience healthcare excellence with our comprehensive medical services and expert doctors</p>
+            </div>
+            <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-user-md"></i>
                     </div>
                     <h3>Expert Doctors</h3>
-                    <p>Access to highly qualified and experienced medical professionals</p>
+                    <p>Access to highly qualified and experienced medical professionals across all specialties</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <h3>24/7 Care</h3>
-                    <p>Round-the-clock medical support whenever you need it</p>
+                    <h3>24/7 Availability</h3>
+                    <p>Round-the-clock medical support and emergency consultations whenever you need them</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-hospital"></i>
                     </div>
                     <h3>Modern Facilities</h3>
-                    <p>State-of-the-art medical equipment and facilities</p>
+                    <p>State-of-the-art medical equipment and cutting-edge healthcare facilities</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3>Patient Care</h3>
-                    <p>Personalized attention and comprehensive care</p>
+                    <h3>Personalized Care</h3>
+                    <p>Tailored treatment plans and comprehensive care focused on your unique needs</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="how-it-works" class="how-it-works">
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
         <div class="container">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">How It Works</h2>
-            <div class="steps">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Get the care you need in three simple steps</p>
+            </div>
+            <div class="steps-container">
                 <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>Find a Doctor</h3>
-                    <p>Search by location</p>
+                    <div class="step-number">1</div>
+                    <h3>Find Your Doctor</h3>
+                    <p>Search by specialty, location, or doctor name. Browse profiles, read reviews, and check availability.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
+                    <div class="step-number">2</div>
                     <h3>Book Appointment</h3>
-                    <p>Select your preferred time slot and book instantly</p>
+                    <p>Select your preferred time slot and book instantly. Receive confirmation and reminders.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <h3>Get Care</h3>
-                    <p>Book and visit the doctor and get the care you need</p>
+                    <div class="step-number">3</div>
+                    <h3>Get Quality Care</h3>
+                    <p>Visit the doctor and receive the personalized care and treatment you deserve.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="specialties" class="specialties">
+    <!-- Specialties -->
+    <section class="specialties" id="specialties">
         <div class="container">
-            <h2 style="font-size: 2rem; margin-bottom: 2rem;">Popular Specialties</h2>
-            <div class="specialty-grid">
+            <div class="section-header">
+                <h2>Popular Specialties</h2>
+                <p>Find the right specialist for your healthcare needs</p>
+            </div>
+            <div class="specialties-grid">
                 <div class="specialty-card">
                     <div class="specialty-icon">
                         <i class="fas fa-heart"></i>
@@ -135,51 +151,80 @@
                     </div>
                     <h3>Orthopedics</h3>
                 </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Ophthalmology</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <h3>Dentistry</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <h3>Gynecology</h3>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <h3>Pulmonology</h3>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="testimonials" class="testimonials">
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">What Our Patients Say</h2>
-            <div class="testimonial-grid">
+            <div class="section-header">
+                <h2>What Our Patients Say</h2>
+                <p>Real experiences from real patients</p>
+            </div>
+            <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"Excellent service! The booking process was smooth."</p>
-                    <p style="font-weight: bold; margin-top: 1rem;">Kaira Nadioo</p>
+                    <p class="testimonial-text">"Excellent service! The booking process was incredibly smooth and the doctor was very professional. Highly recommend DocBook for anyone looking for quality healthcare."</p>
+                    <div class="testimonial-author">Kaira Nadioo</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"I'm impressed with the quality of care I received. He was knowledgeable and caring."</p>
-                    <p style="font-weight: bold; margin-top: 1rem;">Arther Smith</p>
+                    <p class="testimonial-text">"I'm impressed with the quality of care I received. The doctor was knowledgeable, caring, and took time to explain everything thoroughly."</p>
+                    <div class="testimonial-author">Arthur Smith</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"DocBook easy to find your preferred doctor and book an appointment. Highly  Highly recommended!"</p>
-                    <p style="font-weight: bold; margin-top: 1rem;">Gugulethu Zondi</p>
+                    <p class="testimonial-text">"DocBook makes it easy to find your preferred doctor and book an appointment. The platform is user-friendly and efficient. Highly recommended!"</p>
+                    <div class="testimonial-author">Gugulethu Zondi</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
     <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Need Medical Attention?</h2>
-                <p style="margin-bottom: 2rem;">Book your appointment now</p>
-                <a href="#" class="btn btn-primary">Book Appointment</a>
-                <div style="margin-top: 2rem;">
-                    <span style="display: inline-flex; align-items: center;">
-                        <span style="width: 2rem; height: 2rem; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">
-                            <i class="fas fa-phone"></i>
-                        </span>
-                        or call us at <strong style="margin-left: 0.5rem;">+27 632262804</strong>
-                    </span>
+                <h2>Ready to Get Started?</h2>
+                <p>Join thousands of patients who trust DocBook for their healthcare needs</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" id="cta-book">Book Your Appointment</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>Need help? Call us at <strong>+27 632262804</strong></span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -187,7 +232,7 @@
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#why-choose-us"><i class="fas fa-check-circle"></i> Why Choose Us</a></li>
+                        <li><a href="#features"><i class="fas fa-check-circle"></i> Features</a></li>
                         <li><a href="#how-it-works"><i class="fas fa-question-circle"></i> How It Works</a></li>
                         <li><a href="#specialties"><i class="fas fa-stethoscope"></i> Specialties</a></li>
                     </ul>
@@ -205,21 +250,75 @@
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
                         <li><i class="fas fa-phone"></i> +27 632262804</li>
-                        <li><i class="fas fa-envelope"></i> dubentokozo45@yahoo.com.</li>
+                        <li><i class="fas fa-envelope"></i> dubentokozo45@yahoo.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> South Africa</li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="https://github.com/Ntokozo31/doctor-booking-system" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://github.com/Ntokozo31/doctor-booking-system" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 DocBook. All rights reserved.</p>
+                <p>&copy; 2025 DocBook. All rights reserved. | Privacy Policy | Terms of Service</p>
             </div>
         </div>
     </footer>
-    <script src="signup-login.js"></script>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            
+            <!-- Login Form -->
+            <form class="auth-form active" id="login-form">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-dark);">Welcome Back</h2>
+                <div id="login-message"></div>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                <div class="auth-switch">
+                    <p>Don't have an account? <button type="button" id="show-signup">Sign up here</button></p>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signup-form">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-dark);">Create Account</h2>
+                <div id="signup-message"></div>
+                <div class="form-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                <div class="auth-switch">
+                    <p>Already have an account? <button type="button" id="show-login">Sign in here</button></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
